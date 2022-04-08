@@ -10,7 +10,7 @@ const LayoutBootom = ({ children }) => {
                 <button><img src="/images/ios_download.png" alt="ios download btn" /></button>
                 <button><img src="/images/google_download.png" alt="google download btn" /></button>
             </div>
-            <div>
+            <MetaStyled>
                 <ul>
                     <li>Meta</li>
                     <li>소개</li>
@@ -29,9 +29,20 @@ const LayoutBootom = ({ children }) => {
                     <li>한국어</li>
                     <li>© 2022 Instagram from Meta</li>
                 </ul>
-            </div>
+            </MetaStyled>
         </>
     )
 }
 
 export default LayoutBootom;
+
+const MetaStyled = styled.ul`
+    & ul {
+        display: flex;
+    }
+    & ul li {
+        color: rgb(142, 142, 142);
+        font-size: 12px;
+        font-weight: 400;
+    }
+`;
