@@ -3,7 +3,7 @@ import { LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_OUT_FAILURE, LOG_OU
 
 function* login(action) {
     try {
-        yield delay(500);
+        yield delay(1000);
         yield put({
             type: LOG_IN_SUCCESS,
             data: action.data,

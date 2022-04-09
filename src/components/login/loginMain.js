@@ -1,20 +1,66 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useInput } from '../../hook/useinput';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOG_IN_REQUEST } from '../../reducer/user';
 
 const LoginMain = () => {
+    const [email, onChangeEmail] = useInput("");
+    const [password, onChangePassword] = useInput("");
+    const dispatch = useDispatch();
+    const navigator = useNavigate();
+    const { info } = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if(info) {
+            navigator('/');
+        }
+    }, [info, navigator]);
+
+    const onSubmitLogin = useCallback((e) => {
+        e.preventDefault();
+        dispatch({
+            type: LOG_IN_REQUEST,
+            data: {
+                email: email,
+                password: password
+            }
+        });
+    }, [dispatch, email, password]);
+
     return(
         <>  
             <LoginMainStyled>
                 <div className='logo'><button><img src="/images/logo_L.png" alt="logo" /></button></div>
-                <form>
-                    <input 
-                    type="text" 
-                    placeholder="전화번호, 사용자 이름 또는 이메일" />
-                    <input 
-                    type="password" 
-                    placeholder="비밀번호" />
-                    <BlueBtn type="submit">로그인</BlueBtn>
+                <form onSubmit={onSubmitLogin}>
+                    <div>
+                        <label htmlFor="user-email"></label>
+                        <input 
+                        name="user-email"
+                        type="text" 
+                        placeholder="전화번호, 사용자 이름 또는 이메일"
+                        value={email}
+                        onChange={onChangeEmail}
+                        autoComplete="off"
+                        required />
+                    </div>
+                    <div>
+                        <label htmlFor="user-password"></label>
+                        <input 
+                        name="user-password"
+                        type="password" 
+                        placeholder="비밀번호"
+                        value={password}
+                        onChange={onChangePassword}
+                        autoComplete="off"
+                        required />
+                    </div>
+                    {email !== "" && password !== "" ? (
+                        <BlueBtnConfirm type="submit">로그인</BlueBtnConfirm>
+                    ) : (
+                        <BlueBtn type="submit">로그인</BlueBtn>
+                    )}
                 </form>
                 <div className='section-line'>
                     <div className='line'></div>
@@ -41,6 +87,17 @@ const LoginMainStyled = styled.div`
     padding: 10px 0;
     & form {
         margin-top: 24px;
+    }
+    & form button {
+        color: rgb(255, 255, 255);
+        font-weight: 600;
+        width: 260px;
+        height: 30px;
+        margin: 8px 40px;
+        padding: 5px 9px;
+        line-height: 18px;
+        font-size: 14px;
+        border-radius: 4px;
     }
     & .logo img {
         width: 175px;
@@ -108,15 +165,10 @@ const MoveRegisterSection = styled.div`
 
 const BlueBtn = styled.button`
     background-color: rgba(0, 149, 246, 0.3);
-    color: rgb(255, 255, 255);
-    font-weight: 600;
-    width: 260px;
-    height: 30px;
-    margin: 8px 40px;
-    padding: 5px 9px;
-    line-height: 18px;
-    font-size: 14px;
-    border-radius: 4px;
+`;
+
+const BlueBtnConfirm = styled.button`
+    background-color: rgba(var(--d69,0,149,246),1);
 `;
 
 const FacebookBtn = styled.button`

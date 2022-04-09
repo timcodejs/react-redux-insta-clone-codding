@@ -15,6 +15,7 @@ const initialState = {
 
 const dummyUser = (data) => ({
     ...data,
+    id: 1,
 });
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
@@ -53,39 +54,43 @@ const reducer = (state=initialState, action) => {
                 break;
 
             case LOG_OUT_REQUEST:
-                draft.loginLoading = true;
-                draft.loginDone = false;
-                draft.loginError = null;
+                draft.logoutLoading = true;
+                draft.logoutDone = false;
+                draft.logoutError = null;
                 break;
 
             case LOG_OUT_SUCCESS:
-                draft.loginLoading = false;
-                draft.loginDone = true;
+                draft.logoutLoading = false;
+                draft.logoutDone = true;
                 draft.info = null; // 로그아웃 성공 시 데이터 null 처리
                 break;
 
             case LOG_OUT_FAILURE:
-                draft.loginLoading = false;
-                draft.loginDone = false;
-                draft.loginError = action.error;
+                draft.logoutLoading = false;
+                draft.logoutDone = false;
+                draft.logoutError = action.error;
                 break;
 
             case REGISTER_REQUEST:
-                draft.loginLoading = true;
-                draft.loginDone = false;
-                draft.loginError = null;
+                draft.registerLoading = true;
+                draft.registerDone = false;
+                draft.registerError = null;
                 break;
 
             case REGISTER_SUCCESS:
-                draft.loginLoading = false;
-                draft.loginDone = true;
+                draft.registerLoading = false;
+                draft.registerDone = true;
                 // 회원가입은 넘어가도록 설정
                 break;
 
             case REGISTER_FAILURE:
-                draft.loginLoading = false;
-                draft.loginDone = false;
-                draft.loginError = action.error;
+                draft.registerLoading = false;
+                draft.registerDone = false;
+                draft.registerError = action.error;
+                break;
+
+            case REGISTER_DONE_REQUEST:
+                draft.registerDone = false;
                 break;
 
             default:

@@ -1,8 +1,40 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useInput } from '../../hook/useinput';
+import { useDispatch, useSelector } from 'react-redux';
+import { REGISTER_REQUEST, REGISTER_DONE_REQUEST } from '../../reducer/user';
 
 const RegisterMain = () => {
+    const [email, onChangeEmail] = useInput("");
+    const [name, onChangeName] = useInput("");
+    const [nickname, onChangeNickname] = useInput("");
+    const [password, onChangePassword] = useInput("");
+    const dispatch = useDispatch();
+    const navigator = useNavigate();
+    const { registerDone } = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if(registerDone) {
+            navigator('/login');
+            dispatch({
+                type: REGISTER_DONE_REQUEST
+            })
+        }
+    }, [registerDone, navigator, dispatch]);
+
+    const onSubmitRegister = useCallback((e) => {
+        e.preventDefault();
+        dispatch({
+            type: REGISTER_REQUEST,
+            data: {
+                email,
+                name,
+                nickname,
+                password
+            }
+        });
+    }, [dispatch]);
     return(
         <>
             <RegisterMainStyled>
@@ -14,20 +46,53 @@ const RegisterMain = () => {
                     <div className='linetext'>또는</div>
                     <div className='line'></div>
                 </div>
-                <form>
-                    <input 
-                    type="text" 
-                    placeholder="휴대폰 번호 또는 이메일 주소" />
-                    <input
-                    type="text"
-                    placeholder="성명" />
-                    <input
-                    type="text"
-                    placeholder="사용자 이름" />
-                    <input 
-                    type="password" 
-                    placeholder="비밀번호" />
-                    <BlueBtn type="submit">가입</BlueBtn>
+                <form onSubmit={onSubmitRegister}>
+                    <div>
+                        <label htmlFor='user-email'></label>
+                        <input 
+                        type="text" 
+                        placeholder="휴대폰 번호 또는 이메일 주소"
+                        value={email}
+                        onChange={onChangeEmail}
+                        autoComplete="off"
+                        required />
+                    </div>
+                    <div>
+                        <label htmlFor='user-name'></label>
+                        <input
+                        type="text"
+                        placeholder="성명" 
+                        value={name}
+                        onChange={onChangeName}
+                        autoComplete="off"
+                        required />
+                    </div>
+                    <div>
+                        <label htmlFor='user-nickname'></label>
+                        <input
+                        type="text"
+                        placeholder="사용자 이름" 
+                        value={nickname}
+                        onChange={onChangeNickname}
+                        autoComplete="off"
+                        required />
+                    </div>
+                    <div>
+                        <label htmlFor='user-password'></label>
+                        <input 
+                        type="password" 
+                        placeholder="비밀번호"
+                        value={password}
+                        onChange={onChangePassword}
+                        autoComplete="off"
+                        required  />
+                    </div>
+                    {email !== "" && name !== "" && nickname !== "" && password !== "" ? (
+                        <BlueBtnConfirm type="submit">가입</BlueBtnConfirm>
+                    ) : (
+                        <BlueBtn type="submit">가입</BlueBtn>
+                    )}
+                    
                 </form>
                 <div className='register-info'>가입하면 Instagram의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.</div>
             </RegisterMainStyled>
@@ -52,6 +117,17 @@ const RegisterMainStyled = styled.div`
         font-weight: 600;
         line-height: 20px;
         margin: 0 40px 10px;
+    }
+    & form button {
+        color: rgb(255, 255, 255);
+        font-weight: 600;
+        width: 268px;
+        height: 30px;
+        margin: 8px 40px;
+        padding: 5px 9px;
+        line-height: 18px;
+        font-size: 14px;
+        border-radius: 4px;
     }
     & .facebook-btn {
         padding: 8px 40px;
@@ -119,19 +195,13 @@ const MoveLoginSection = styled.div`
 
 const BlueBtn = styled.button`
     background-color: rgba(0, 149, 246, 0.3);
-    color: rgb(255, 255, 255);
-    font-weight: 600;
-    width: 268px;
-    height: 30px;
-    margin: 8px 40px;
-    padding: 5px 9px;
-    line-height: 18px;
-    font-size: 14px;
-    border-radius: 4px;
+`;
+
+const BlueBtnConfirm = styled.button`
+    background-color: rgba(var(--d69,0,149,246),1);
 `;
 
 const FacebookBtn = styled.button`
-    /* background-color: ; */
     border: 1px solid transparent;
     border-radius: 4px;
     color: #fff;
