@@ -25,6 +25,7 @@ export default App;
 const GlobalStyle = createGlobalStyle`
   body {
     font-family: sans-serif;
+    margin: 0;
   }
   a {
     text-decoration: none;
