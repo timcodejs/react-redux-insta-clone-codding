@@ -5,8 +5,8 @@ import styled from 'styled-components';
 const LoginMain = () => {
     return(
         <>  
-            <div>
-                <div><button><img src="/images/logo_L.png" alt="logo" /></button></div>
+            <LoginMainStyled>
+                <div className='logo'><button><img src="/images/logo_L.png" alt="logo" /></button></div>
                 <form>
                     <input 
                     type="text" 
@@ -16,23 +16,103 @@ const LoginMain = () => {
                     placeholder="비밀번호" />
                     <BlueBtn type="submit">로그인</BlueBtn>
                 </form>
-                <div>또는</div>
-                <div><FacebookBtn>Facebook으로 로그인</FacebookBtn></div>
-                <div>비밀번호를 잊으셨나요?</div>
-            </div>
-            <div>계정이 없으신가요? <Link to="/register"><SpanColor>가입하기</SpanColor></Link></div>
+                <div className='section-line'>
+                    <div className='line'></div>
+                    <div className='linetext'>또는</div>
+                    <div className='line'></div>
+                </div>
+                <div className='facebook-login'><FacebookBtn>Facebook으로 로그인</FacebookBtn></div>
+                <div className='forget-password'><button>비밀번호를 잊으셨나요?</button></div>
+            </LoginMainStyled>
+            <MoveRegisterSection>
+                <div>계정이 없으신가요? <Link to="/register"><SpanColor>가입하기</SpanColor></Link></div>
+            </MoveRegisterSection>
         </>
     )
 }
 
 export default LoginMain;
 
+const LoginMainStyled = styled.div`
+    width: 350px;
+    background-color: #fff;
+    border: 1px solid rgb(219, 219, 219);
+    margin: 0 auto 10px auto;
+    padding: 10px 0;
+    & form {
+        margin-top: 24px;
+    }
+    & .logo img {
+        width: 175px;
+        max-width: 100%;
+        margin: 36px 0 12px 0;
+    }
+    & input {
+        width: 250px;
+        height: 20px;
+        font-size: 12px;
+        font-weight: 400;
+        color: rgb(38, 38, 38);
+        background-color: rgb(251, 250, 250);
+        border: 1px solid rgb(219, 219, 219);
+        padding: 9px 0px 7px 8px;
+        border-radius: 3px;
+        margin: 0 40px 6px;
+    }
+    & .section-line {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-shrink: 0;
+        margin: 10px 40px 18px;
+    }
+    & .section-line .linetext {
+        flex-grow: 0;
+        flex-shrink: 0;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 15px;
+        margin: 0 18px;
+        color: rgba(var(--f52,142,142,142),1);
+    }
+    & .section-line .line {
+        height: 1px;
+        position: relative;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-direction: column;
+        background-color: rgba(var(--b38,219,219,219),1);
+    }
+    & .facebook-login {
+        margin: 8px 40px;
+    }
+    & .forget-password button {
+        font-size: 12px;
+        line-height: 16px;
+        margin: 12px 0 10px 0;
+        color: rgba(var(--fe0,0,55,107),1);
+    }
+`;
+
+const MoveRegisterSection = styled.div`
+    width: 350px;
+    background-color: #fff;
+    border: 1px solid rgb(219, 219, 219);
+    margin: 0 auto 10px auto;
+    padding: 10px 0;
+    font-size: 14px;
+    & div {
+        margin: 15px;
+    }
+`;
+
 const BlueBtn = styled.button`
     background-color: rgba(0, 149, 246, 0.3);
     color: rgb(255, 255, 255);
     font-weight: 600;
-    width: 268px;
+    width: 260px;
     height: 30px;
+    margin: 8px 40px;
     padding: 5px 9px;
     line-height: 18px;
     font-size: 14px;
@@ -43,10 +123,11 @@ const FacebookBtn = styled.button`
     color: #385185;
     font-weight: 600;
     font-size: 14px;
+    background: url('/images/facebook_img.png') no-repeat center left/16px;
+    padding-left: 25px;
 `;
 
 const SpanColor = styled.span`
     color: rgb(0, 149, 246);
     font-weight: 600;
-    font-size: 14px;
 `;
