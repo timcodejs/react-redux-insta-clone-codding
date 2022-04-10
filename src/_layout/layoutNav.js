@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { LOG_OUT_REQUEST } from "../reducer/user";
-import Avatar from "../components/home/post/avatar";
+import Avatar from "../components/home/common/avatar";
 
 const LayoutNav = ({ children }) => {
     const navigator = useNavigate();

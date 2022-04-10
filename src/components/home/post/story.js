@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-const Post = () => {
+const Story = () => {
     return(
-        <PostStyled>
-            Post
-        </PostStyled>
+        <StoryStyled>
+            Story
+        </StoryStyled>
     )
 }
 
-export default Post;
+export default Story;
 
-const PostStyled = styled.div`
+const StoryStyled = styled.div`
     background: rgba(var(--d87,255,255,255),1);
     border: 1px solid rgba(var(--b6a,219,219,219),1);
     box-sizing: border-box;
