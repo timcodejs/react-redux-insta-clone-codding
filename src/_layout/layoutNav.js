@@ -50,12 +50,11 @@ const LayoutNav = ({ children }) => {
                             <button><img src="/images/insta_heart_empty.png" alt="home icon" /></button>
                         </li>
                         <li>
-                            <button><Avatar /></button>
+                            <button  onClick={onClickLogout}><Avatar /></button>
                         </li>
                     </ul>
                 </div>            
             </LayoutNavStyled>
-            <button onClick={onClickLogout}>로그아웃</button>
             <div>{children}</div>
         </>
     )
@@ -64,12 +63,15 @@ const LayoutNav = ({ children }) => {
 export default LayoutNav;
 
 const LayoutNavStyled = styled.div`
+    position: fixed;
+    z-index: 10;
     width: 100%;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+    background-color: #fff;
     border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
     & .inner {
         min-width: 935px;
