@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { LOG_OUT_REQUEST } from "../reducer/user";
-import Avatar from "../components/home/common/avatar";
+import Avatar from "../components/home/faker/avatar";
 
 const LayoutNav = ({ children }) => {
     const navigator = useNavigate();
@@ -50,7 +50,7 @@ const LayoutNav = ({ children }) => {
                             <button><img src="/images/insta_heart_empty.png" alt="home icon" /></button>
                         </li>
                         <li>
-                            <button  onClick={onClickLogout}><Avatar /></button>
+                            <button onClick={onClickLogout}><Avatar /></button>
                         </li>
                     </ul>
                 </div>            

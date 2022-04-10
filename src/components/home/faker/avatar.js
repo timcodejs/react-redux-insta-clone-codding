@@ -13,6 +13,6 @@ const Avatar = () => {
 export default Avatar;
 
 const StyledAvatar = styled.img`
-    max-width: 25px;
+    width: 100%;
     border-radius: 50%;
 `;
