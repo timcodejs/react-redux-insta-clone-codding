@@ -16,7 +16,7 @@ const LoginMain = () => {
         if(info) {
             navigator('/');
         }
-    }, [info, navigator]);
+    }, [info]);
 
     const onSubmitLogin = useCallback((e) => {
         e.preventDefault();

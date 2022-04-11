@@ -1,3 +1,4 @@
+import faker from '@faker-js/faker';
 import produce from 'immer';
 
 const initialState = {
@@ -16,6 +17,8 @@ const initialState = {
 const dummyUser = (data) => ({
     ...data,
     id: 1,
+    nickname: faker.name.lastName(),
+    avatar: faker.image.avatar(),
 });
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";

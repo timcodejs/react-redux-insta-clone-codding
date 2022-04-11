@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Avatar from "../faker/avatar";
 import Name from "../faker/name";
@@ -6,14 +7,17 @@ import Word from "../faker/word";
 
 const Info = () => {
     const dummyNumber = [1, 2, 3, 4, 5];
+    const { info } = useSelector((state) => state.user);
 
     return(
         <InfoStyled>
             <div className="user-info">
                 <div className="user-meta">
-                    <span className="user-avatar"><Avatar /></span>
+                    <span className="user-avatar">
+                        {info && (<img src={info.avatar} alt="" />)}
+                    </span>
                     <div>
-                        <h4><Name /></h4>
+                        {info && (<h4>{info.nickname}</h4>)}
                         <p><Word /></p>
                     </div>
                 </div>
@@ -88,6 +92,10 @@ const InfoStyled = styled.div`
     }
     & .user-avatar {
         width: 56px;
+    }
+    & .user-avatar img {
+        width: 100%;
+        border-radius: 50%;
     }
     & .friend-avatar {
         width: 32px;

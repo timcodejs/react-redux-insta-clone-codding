@@ -3,13 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { LOG_OUT_REQUEST } from "../reducer/user";
-import Avatar from "../components/home/faker/avatar";
 
 const LayoutNav = ({ children }) => {
     const navigator = useNavigate();
     const dispatch = useDispatch();
     const { info } = useSelector((state) => state.user);
-
+    
     useEffect(() => {
         if(!info) {
             navigator('/login');
@@ -50,7 +49,9 @@ const LayoutNav = ({ children }) => {
                             <button><img src="/images/insta_heart_empty.png" alt="home icon" /></button>
                         </li>
                         <li>
-                            <button onClick={onClickLogout}><Avatar /></button>
+                            <button className="user-avatar" onClick={onClickLogout}>
+                                {info && (<img src={info.avatar} alt="login user avatarimage" />)}
+                            </button>
                         </li>
                     </ul>
                 </div>            
@@ -100,6 +101,13 @@ const LayoutNavStyled = styled.div`
     & .menulist button {
         padding: 0;
         margin: 0;
+    }
+    & .user-avatar {
+        width: 24px;
+    }
+    & .user-avatar img {
+        width: 100%;
+        border-radius: 50%;
     }
 `;
 

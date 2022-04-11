@@ -13,7 +13,7 @@ const HomeMain = () => {
         if(!info) {
             navigator('/login');
         }
-    }, [info, navigator]);
+    }, []);
 
     return(
         <HomeMainStyled>

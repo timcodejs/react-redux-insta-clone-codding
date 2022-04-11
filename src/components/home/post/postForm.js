@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Story from "./story";
 import Post from "./post";
+import { useDispatch, useSelector } from "react-redux";
+import { LOAD_ALLPOSTS_REQUEST } from "../../../reducer/post";
 
 const PostForm = () => {
+    const dispatch = useDispatch();
+    const { allPosts } = useSelector((state) => state.post);
+    const { info } = useSelector((state) => state.user);
+
+    useEffect(() => {
+        if(info) {
+            dispatch({
+                type: LOAD_ALLPOSTS_REQUEST,
+            })
+        }
+    }, []);
+
     return(
         <PostFormstyled>
             <Story />
-            <Post />
+            {allPosts && allPosts.map((post) => <Post key={post.id} post={post} /> )}
         </PostFormstyled>
     )
 }
@@ -21,6 +35,5 @@ const PostFormstyled = styled.div`
     margin-right: 28px;
     left: 50%;
     transform: translateX(-76%);
-
     height: 2000px;
 `;

@@ -1,12 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Avatar from "../faker/avatar";
-import Name from "../faker/name";
-import Word from "../faker/word";
-import faker from "@faker-js/faker";
 
-const Post = () => {
-    const fakerImage = faker.image.avatar();
+const Post = ({post}) => {
     
     return(
         <PostStyled>
@@ -14,15 +9,15 @@ const Post = () => {
                 <div>
                     <div className="section1">
                         <div className="section1-inner">
-                            <div className="section1-avatar"><Avatar /></div>
+                            <div className="section1-avatar"><img src={post.User.avatar} alt="" /></div>
                             <div>
-                                <h4><Name /></h4>
+                                <h4>{post.User.nickname}</h4>
                                 <p>Seoul, Korea</p>
                             </div>
                         </div>
                         <div className="moreBtnimg"><img src="/images/insta_morebtn.png" alt="more button" /></div>
                     </div>
-                    <div className="section2"><img src={fakerImage} alt="img" /></div>
+                    <div className="section2"><img src={post.content} alt="img" /></div>
                     <div className="section3">
                         <div>
                             <div className="section3-icon">
@@ -35,7 +30,7 @@ const Post = () => {
                             </div>
                             <div className="section3-like">좋아요 <span>1</span>개</div>
                             <div className="section3-content">
-                                <div className="section3-user"><span><Name /></span> <Word /></div>
+                                <div className="section3-user"><span>{post.User.nickname}</span> {post.words}</div>
                                 <div className="upload-time">1시간 전</div>
                             </div>
                             <div className="section3-comment">
@@ -79,6 +74,10 @@ const PostStyled = styled.div`
     & .section1-avatar {
         width: 32px;
         margin-right: 14px;
+    }
+    & .section1-avatar img {
+        width: 100%;
+        border-radius: 50%;
     }
     & .moreBtnimg img {        
         width: 15px;
