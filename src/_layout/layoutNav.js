@@ -102,11 +102,8 @@ const LayoutNavStyled = styled.div`
         padding: 0;
         margin: 0;
     }
-    & .user-avatar {
-        width: 24px;
-    }
     & .user-avatar img {
-        width: 100%;
+        width: 24px;
         border-radius: 50%;
     }
 `;
