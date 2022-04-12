@@ -51,7 +51,6 @@ const LayoutNav = ({ children }) => {
                         </li>
                         <li>
                             <button onClick={onCLickAddPosthandler}><img src="/images/insta_plus_empty.png" alt="home icon" /></button>
-                            <AddPost display={plusPost} onClickAddPostExit={onClickAddPostExit} />
                         </li>
                         <li>
                             <Link to="/explore"><img src="/images/insta_find_empty.png" alt="home icon" /></Link>
@@ -66,6 +65,7 @@ const LayoutNav = ({ children }) => {
                         </li>
                     </ul>
                 </div>
+                <AddPost display={plusPost} onClickAddPostExit={onClickAddPostExit} />
             </LayoutNavStyled>
             <div>{children}</div>
         </>

@@ -1,10 +1,34 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import {useDropzone} from 'react-dropzone';
 
 const AddPost = ({display, onClickAddPostExit}) => {
+    const [myFiles, setMyFiles] = useState([]);
+
+    const onDrop = useCallback(acceptedFiles => {
+        setMyFiles([...myFiles, ...acceptedFiles]);
+    }, [myFiles]);
+
+    const {getRootProps, getInputProps} = useDropzone({
+        onDrop,
+    });
+
+    const files = myFiles.map(file => (
+        <li className='file-list' key={file.path}>
+            <span>{file.path} - {file.size} bytes</span>
+            <button className='file-delete' onClick={() => remove(file)}>remove</button>
+        </li>
+    ));
+
+    const remove = file => {
+        const newFiles = [...myFiles]
+        newFiles.splice(newFiles.indexOf(file), 1)
+        setMyFiles(newFiles)
+    };
+
     const onClickExitBtn = useCallback(() => {
         onClickAddPostExit();
-    }, [onClickAddPostExit])
+    }, [onClickAddPostExit]);
 
     return ( 
         <AddPostStyled style={{display: display}}>
@@ -13,9 +37,17 @@ const AddPost = ({display, onClickAddPostExit}) => {
                     <h3>새 게시물 만들기</h3>
                     <div className='addpost-section'>
                         <div>
-                            <div className='addpost-img'><img src="/images/addpost_img.png" alt="이미지 추가" /></div>
-                            <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
-                            <div className='addpost-btn'><button>컴퓨터에서 선택</button></div>
+                            <section className="container">
+                                <div {...getRootProps({className: 'dropzone'})}>
+                                    <input {...getInputProps()} />
+                                    <div className='addpost-img'><img src="/images/addpost_img.png" alt="이미지 추가" /></div>
+                                    <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
+                                    <div className='addpost-btn'><button>컴퓨터에서 선택</button></div>
+                                </div>
+                                <aside>
+                                    <ul className='file-list'>{files}</ul>
+                                </aside>
+                            </section>
                         </div>
                     </div>
                 </div>
@@ -44,6 +76,9 @@ const AddPostStyled = styled.div`
         position: absolute;
         top: 10px;
         right: 10px;
+    }
+    & > div > button img {
+        width: 30px;
     }
     & .addpost-inner {
         width: 604px;
@@ -87,5 +122,23 @@ const AddPostStyled = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    & .file-list {
+        padding: 0;
+        padding-bottom: 10px;
+    }
+    & .file-list li {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+    }
+    & .file-delete {
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-left: 5px;
+        padding: 4px 7px;
+        color: rgba(var(--eca,255,255,255),1);
+        background-color: rgba(var(--d69,0,149,246),1);
     }
 `;
