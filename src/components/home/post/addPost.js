@@ -13,9 +13,9 @@ const AddPost = ({display, onClickAddPostExit}) => {
                     <h3>새 게시물 만들기</h3>
                     <div className='addpost-section'>
                         <div>
-                            <div><img src="/images/addpost_img.png" alt="이미지 추가" /></div>
+                            <div className='addpost-img'><img src="/images/addpost_img.png" alt="이미지 추가" /></div>
                             <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
-                            <div><button>컴퓨터에서 선택</button></div>
+                            <div className='addpost-btn'><button>컴퓨터에서 선택</button></div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ const AddPostStyled = styled.div`
         line-height: 26px;
         color: rgba(var(--i1d,38,38,38),1);
     }
-    & .addpost-inner button {
+    & .addpost-btn button {
         border-radius: 4px;
         font-size: 14px;
         font-weight: 600;
@@ -79,7 +79,7 @@ const AddPostStyled = styled.div`
         color: rgba(var(--eca,255,255,255),1);
         background-color: rgba(var(--d69,0,149,246),1);
     }
-    & .addpost-inner img {
+    & .addpost-img img {
         width: 96px;
     }
     & .addpost-section {
