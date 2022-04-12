@@ -18,7 +18,7 @@ const Info = () => {
                     </span>
                     <div>
                         {info && (<h4>{info.nickname}</h4>)}
-                        <p><Word /></p>
+                        <p>{info.word}</p>
                     </div>
                 </div>
                 <div><button className="blue-color">전환</button></div>

@@ -19,6 +19,7 @@ const dummyUser = (data) => ({
     id: 1,
     nickname: faker.name.lastName(),
     avatar: faker.image.avatar(),
+    word: faker.lorem.word(),
 });
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";

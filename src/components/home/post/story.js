@@ -1,17 +1,52 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
-import Avatar from "../faker/avatar";
-import Name from "../faker/name";
+import { useSelector } from "react-redux";
 
 const Story = () => {
+    const [leftDisplay, setLeftDisplay] = useState('none');
+    const [rightDisplay, setRightDisplay] = useState('block');
+    const { allPosts } = useSelector((state) => state.post);
+
+    const onScrollLeft = useCallback((e) => {
+        const pNode = e.target.parentNode.parentNode.parentNode.previousSibling;
+        const sNode = e.target.parentNode.parentNode.parentNode.previousSibling.scrollLeft;
+        pNode.scrollTo({top: 0, left: -320 + sNode, behavior: 'smooth' });
+    }, []);
+
+    const onScrollRight = useCallback((e) => {
+        const pNode = e.target.parentNode.parentNode.parentNode.previousSibling;
+        const sNode = e.target.parentNode.parentNode.parentNode.previousSibling.scrollLeft;
+        pNode.scrollTo({top: 0, left: 320 + sNode, behavior: 'smooth' });
+    }, []);
+
+    const onScrollEvent = useCallback((e) => {
+        const maxLeft = e.target.scrollWidth - e.target.clientWidth;
+        if(e.target.scrollLeft === 0) {
+            setLeftDisplay('none');
+        } else if(e.target.scrollLeft > 0) {
+            setLeftDisplay('block');
+            if(e.target.scrollLeft === maxLeft) {
+                setRightDisplay('none');
+            } else {
+                setRightDisplay('block');
+            }
+        } 
+    }, []);
+
     return(
         <StoryStyled>
-            <ul>
-                <li>
-                    <div><Avatar /></div>
-                    <div><Name /></div>
+            <ul onScroll={onScrollEvent}>
+                {allPosts && allPosts.map((post) => (
+                <li key={post.id}>
+                    <div><img src={post.User.avatar} alt="user avatar" /></div>
+                    <div>{post.User.nickname}</div>
                 </li>
+                ))}
             </ul>
+            <div className="scrollBtn">
+                <div onClick={onScrollLeft}><button style={{display: leftDisplay}}><img src="/images/arrow_left.png" alt="" /></button></div>
+                <div onClick={onScrollRight}><button style={{display: rightDisplay}}><img src="/images/arrow_right.png" alt="" /></button></div>
+            </div>
         </StoryStyled>
     )
 }
@@ -29,14 +64,33 @@ const StoryStyled = styled.div`
         margin: 0;
         padding: 0;
         padding-left: 20px;
+        display: flex;
+        overflow-x: scroll;
+        &::-webkit-scrollbar { display: none; }
     }
     & ul li {
         width: 70px;
         text-align: center;
         font-size: 12px;
+        margin-right: 20px;
     }
     & ul li div {
         width: 56px;
         cursor: pointer;
+    }
+    & ul li div img {
+        width: 100%;
+        border-radius: 50%;
+    }
+    & .scrollBtn {
+        width: 614px;
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        top: 30px;
+    }
+    & .scrollBtn img {
+        display: block;
+        width: 43px;
     }
 `;

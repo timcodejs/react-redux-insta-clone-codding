@@ -12,7 +12,7 @@ const Post = ({post}) => {
                             <div className="section1-avatar"><img src={post.User.avatar} alt="" /></div>
                             <div>
                                 <h4>{post.User.nickname}</h4>
-                                <p>Seoul, Korea</p>
+                                <p>{post.User.address}</p>
                             </div>
                         </div>
                         <div className="moreBtnimg"><img src="/images/insta_morebtn.png" alt="more button" /></div>
@@ -78,6 +78,12 @@ const PostStyled = styled.div`
     & .section1-avatar img {
         width: 100%;
         border-radius: 50%;
+    }
+    & .section1-inner p {
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 400;
+        color: rgba(var(--f52,142,142,142),1);
     }
     & .moreBtnimg img {        
         width: 15px;

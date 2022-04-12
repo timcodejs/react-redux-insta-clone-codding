@@ -10,9 +10,10 @@ const intialPosts = {
                 id: 1,
                 nickname: faker.name.lastName(),
                 avatar: faker.image.avatar(),
+                address: faker.address.city(),
             },
             content: faker.image.avatar(),
-            words: faker.lorem.word(),
+            words: faker.lorem.paragraph(),
             Comments: [
                 {
                     id: shortId.generate(),
@@ -46,9 +47,10 @@ export const createDummyPosts = (number) =>
             id: shortId.generate(),
             nickname: faker.name.lastName(),
             avatar: faker.image.avatar(),
+            address: faker.address.city(),
         },
         content: faker.image.avatar(),
-        words: faker.lorem.word(),
+        words: faker.lorem.paragraph(),
         Comments: []
     }));
 

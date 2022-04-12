@@ -5,7 +5,7 @@ function* loadPosts() {
     try {
         yield put({
             type: LOAD_ALLPOSTS_SUCCESS,
-            data: createDummyPosts(10),
+            data: createDummyPosts(15),
         })
     } catch (error) {
         console.log(error);
