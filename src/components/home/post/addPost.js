@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {useDropzone} from 'react-dropzone';
+import { useSelector } from 'react-redux';
+
 
 const AddPost = ({display, onClickAddPostExit}) => {
     const [buttonDisplay, setButtonDisplay] = useState("none");
     const [postDisplay, setPostDisplay] = useState("none");
+    const { info } = useSelector((state) => state.user);
     const [myFiles, setMyFiles] = useState([]);
 
     const onDrop = useCallback(acceptedFiles => {
@@ -36,8 +39,12 @@ const AddPost = ({display, onClickAddPostExit}) => {
         }
     }, [myFiles]);
 
-    const onClickExitBtn = useCallback(() => {
+    const onClickExitBtn = useCallback((file) => {
         onClickAddPostExit();
+        setPostDisplay("none");
+        if(myFiles.length > 0) {
+            remove(file);
+        }
     }, [onClickAddPostExit]);
 
     const nextAddPost = useCallback(() => {
@@ -70,7 +77,20 @@ const AddPost = ({display, onClickAddPostExit}) => {
                             </div>
                         </div>
                         <div className='addpost-cont' style={{display: postDisplay}}>
-                            d
+                            {info && (
+                                <div className='addpost-cont-inner'>
+                                    <span><img src={info.avatar} alt="user avatar" /></span>
+                                    <span>{info.nickname}</span>
+                                </div>
+                            )}
+                            <div className='addpost-cont-text'>
+                                <textarea cols="60" rows="15" placeholder='문구입력...' />
+                            </div>
+                            <div className='addpost-cont-setting'>
+                                <div>위치추가</div>
+                                <div>접근성</div>
+                                <div>고급설정</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,6 +169,30 @@ const AddPostStyled = styled.div`
         height: 550px;
         border-left: 1px solid rgba(var(--b6a,219,219,219),1);
         
+    }
+    & .addpost-cont-text {
+        border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
+    }
+    & .addpost-cont textarea {
+        width: 90%;
+        border: 0;
+    }
+    & .addpost-cont-inner {
+        display: flex;
+        align-items: center;
+        margin: 20px 20px 10px 20px;
+    }
+    & .addpost-cont-inner img {
+        width: 30px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    & .addpost-cont-setting {
+        text-align: left;
+    }
+    & .addpost-cont-setting div {
+        padding: 10px 10px;
+        border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
     }
     & .addpost-inner p {
         font-size: 22px;
