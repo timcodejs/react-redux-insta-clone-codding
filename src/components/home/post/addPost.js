@@ -1,13 +1,21 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {useDropzone} from 'react-dropzone';
 
 const AddPost = ({display, onClickAddPostExit}) => {
+    const [buttonDisplay, setButtonDisplay] = useState("none");
+    const [postDisplay, setPostDisplay] = useState("none");
     const [myFiles, setMyFiles] = useState([]);
 
     const onDrop = useCallback(acceptedFiles => {
         setMyFiles([...myFiles, ...acceptedFiles]);
     }, [myFiles]);
+
+    const remove = file => {
+        const newFiles = [...myFiles]
+        newFiles.splice(newFiles.indexOf(file), 1)
+        setMyFiles(newFiles)
+    };
 
     const {getRootProps, getInputProps} = useDropzone({
         onDrop,
@@ -20,34 +28,49 @@ const AddPost = ({display, onClickAddPostExit}) => {
         </li>
     ));
 
-    const remove = file => {
-        const newFiles = [...myFiles]
-        newFiles.splice(newFiles.indexOf(file), 1)
-        setMyFiles(newFiles)
-    };
+    useEffect(() => {
+        if(myFiles.length !== 0) {
+            setButtonDisplay('block');
+        } else {
+            setButtonDisplay('none');
+        }
+    }, [myFiles]);
 
     const onClickExitBtn = useCallback(() => {
         onClickAddPostExit();
     }, [onClickAddPostExit]);
 
+    const nextAddPost = useCallback(() => {
+        setPostDisplay((prev) => !prev);
+    }, []);
+
     return ( 
         <AddPostStyled style={{display: display}}>
             <div>
                 <div className='addpost-inner'>
-                    <h3>새 게시물 만들기</h3>
-                    <div className='addpost-section'>
-                        <div>
-                            <section className="container">
-                                <div {...getRootProps({className: 'dropzone'})}>
-                                    <input {...getInputProps()} />
-                                    <div className='addpost-img'><img src="/images/addpost_img.png" alt="이미지 추가" /></div>
-                                    <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
-                                    <div className='addpost-btn'><button>컴퓨터에서 선택</button></div>
-                                </div>
-                                <aside>
-                                    <ul className='file-list'>{files}</ul>
-                                </aside>
-                            </section>
+                    <div className='addpost-top'>
+                        <div></div>
+                        <h3>새 게시물 만들기</h3>
+                        <div onClick={nextAddPost}><button style={{display: buttonDisplay}}>다음</button></div>
+                    </div>
+                    <div className='addpost-bottom'>
+                        <div className='addpost-section'>
+                            <div>
+                                <section className="container">
+                                    <div {...getRootProps({className: 'dropzone'})}>
+                                        <input {...getInputProps()} />
+                                        <div className='addpost-img'><img src="/images/addpost_img.png" alt="이미지 추가" /></div>
+                                        <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
+                                        <div className='addpost-btn'><button>컴퓨터에서 선택</button></div>
+                                    </div>
+                                    <aside>
+                                        <ul className='file-list'>{files}</ul>
+                                    </aside>
+                                </section>
+                            </div>
+                        </div>
+                        <div className='addpost-cont' style={{display: postDisplay}}>
+                            d
                         </div>
                     </div>
                 </div>
@@ -82,6 +105,7 @@ const AddPostStyled = styled.div`
     }
     & .addpost-inner {
         width: 604px;
+        width: calc(100% - 340px);
         max-width: 855px;
         min-width: 348px;
         min-height: 391px;
@@ -92,14 +116,39 @@ const AddPostStyled = styled.div`
         border-radius: 12px;
         text-align: center;
     }
-    & .addpost-inner h3 {
+    & .addpost-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         height: 42px;
+        border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
+    }
+    & .addpost-top div {
+        width: 50px;
+    }
+    & .addpost-top button {
+        font-size: 14px;
+        font-weight: 600;
+        color: rgba(var(--d69,0,149,246),1);
+    }
+    & .addpost-top h3 {
         margin: 0;
         font-size: 16px;
         font-weight: 600;
         line-height: 42px;
         color: rgba(var(--i1d,38,38,38),1);
-        border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
+    }
+    & .addpost-bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    & .addpost-cont {
+        position: relative;
+        width: 340px;
+        height: 550px;
+        border-left: 1px solid rgba(var(--b6a,219,219,219),1);
+        
     }
     & .addpost-inner p {
         font-size: 22px;
@@ -118,7 +167,9 @@ const AddPostStyled = styled.div`
         width: 96px;
     }
     & .addpost-section {
+        width: 450px;
         height: 550px;
+        padding: 0 10px;
         display: flex;
         justify-content: center;
         align-items: center;
