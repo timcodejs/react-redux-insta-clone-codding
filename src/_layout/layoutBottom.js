@@ -5,11 +5,14 @@ const LayoutBootom = ({ children }) => {
     return(
         <LayoutStyled>
             <LayoutBottomStyled>
-                <div>{children}</div>
-                <div className="apptext">앱을 다운로드하세요.</div>
-                <div className="downloadBtn">
-                    <button><img src="/images/ios_download.png" alt="ios download btn" /></button>
-                    <button><img src="/images/google_download.png" alt="google download btn" /></button>
+                <div className="login-img"><img src="/images/login_move.gif" alt="소개 이미지" /></div>
+                <div>
+                    <div>{children}</div>
+                    <div className="apptext">앱을 다운로드하세요.</div>
+                    <div className="downloadBtn">
+                        <button><img src="/images/ios_download.png" alt="ios download btn" /></button>
+                        <button><img src="/images/google_download.png" alt="google download btn" /></button>
+                    </div>
                 </div>
             </LayoutBottomStyled>
             <MetaStyled>
@@ -57,6 +60,13 @@ const LayoutBottomStyled = styled.div`
     margin: 0 auto;
     width: 350px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .login-img img {
+        width: 380px;
+        margin-right: 32px;
+    }
     & .apptext {
         font-weight: 400;
         line-height: 18px;
