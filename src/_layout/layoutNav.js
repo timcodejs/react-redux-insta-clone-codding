@@ -1,13 +1,15 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { LOG_OUT_REQUEST } from "../reducer/user";
+import AddPost from "../components/home/post/addPost";
 
 const LayoutNav = ({ children }) => {
     const navigator = useNavigate();
     const dispatch = useDispatch();
     const { info } = useSelector((state) => state.user);
+    const [plusPost, setPlusPost] = useState('none');
     
     useEffect(() => {
         if(!info) {
@@ -20,6 +22,14 @@ const LayoutNav = ({ children }) => {
             type: LOG_OUT_REQUEST
         })
     }, [dispatch]);
+
+    const onCLickAddPosthandler = useCallback(() => {
+        setPlusPost('block');
+    }, []);
+
+    const onClickAddPostExit = useCallback(() => {
+        setPlusPost('none');
+    }, []);
 
     return(
         <>
@@ -40,7 +50,8 @@ const LayoutNav = ({ children }) => {
                             <Link to="/direct"><img src="/images/insta_send_empty.png" alt="home icon" /></Link>
                         </li>
                         <li>
-                            <button><img src="/images/insta_plus_empty.png" alt="home icon" /></button>
+                            <button onClick={onCLickAddPosthandler}><img src="/images/insta_plus_empty.png" alt="home icon" /></button>
+                            <AddPost display={plusPost} onClickAddPostExit={onClickAddPostExit} />
                         </li>
                         <li>
                             <Link to="/explore"><img src="/images/insta_find_empty.png" alt="home icon" /></Link>
@@ -54,7 +65,7 @@ const LayoutNav = ({ children }) => {
                             </button>
                         </li>
                     </ul>
-                </div>            
+                </div>
             </LayoutNavStyled>
             <div>{children}</div>
         </>
