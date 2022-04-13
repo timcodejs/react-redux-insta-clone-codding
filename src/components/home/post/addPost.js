@@ -1,23 +1,28 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {useDropzone} from 'react-dropzone';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_POST_REQUEST } from '../../../reducer/post';
+import { useInput } from '../../../hook/useinput';
 
 
 const AddPost = ({display, onClickAddPostExit}) => {
     const [buttonDisplay, setButtonDisplay] = useState("none");
     const [postDisplay, setPostDisplay] = useState("none");
-    const { info } = useSelector((state) => state.user);
+    const [next, setNext] = useState(false);
     const [myFiles, setMyFiles] = useState([]);
+    const [wordcontent, onChangeWordcontent] = useInput("");
+    const { info } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
 
     const onDrop = useCallback(acceptedFiles => {
         setMyFiles([...myFiles, ...acceptedFiles]);
     }, [myFiles]);
 
     const remove = file => {
-        const newFiles = [...myFiles]
-        newFiles.splice(newFiles.indexOf(file), 1)
-        setMyFiles(newFiles)
+        const newFiles = [...myFiles];
+        newFiles.splice(newFiles.indexOf(file), 1);
+        setMyFiles(newFiles);
     };
 
     const {getRootProps, getInputProps} = useDropzone({
@@ -45,11 +50,26 @@ const AddPost = ({display, onClickAddPostExit}) => {
         if(myFiles.length > 0) {
             remove(file);
         }
+        setNext((prev) => !prev);
     }, [onClickAddPostExit]);
 
     const nextAddPost = useCallback(() => {
         setPostDisplay((prev) => !prev);
+        setNext((prev) => !prev);
     }, []);
+
+    const shareAddPost = useCallback(() => {
+        dispatch({
+            type: ADD_POST_REQUEST,
+            data: {
+                nickname: info.nickname,
+                avatar: info.avatar,
+                content: myFiles[0].path,
+                words: wordcontent,
+            }
+        });
+        onClickExitBtn();
+    }, [info, wordcontent, myFiles]);
 
     return ( 
         <AddPostStyled style={{display: display}}>
@@ -58,7 +78,12 @@ const AddPost = ({display, onClickAddPostExit}) => {
                     <div className='addpost-top'>
                         <div></div>
                         <h3>새 게시물 만들기</h3>
-                        <div onClick={nextAddPost}><button style={{display: buttonDisplay}}>다음</button></div>
+                        {!next 
+                        ? (
+                            <div onClick={nextAddPost}><button style={{display: buttonDisplay}}>다음</button></div>
+                        ) : (
+                            <div onClick={shareAddPost}><button>공유하기</button></div>
+                        )}
                     </div>
                     <div className='addpost-bottom'>
                         <div className='addpost-section'>
@@ -84,7 +109,7 @@ const AddPost = ({display, onClickAddPostExit}) => {
                                 </div>
                             )}
                             <div className='addpost-cont-text'>
-                                <textarea cols="60" rows="15" placeholder='문구입력...' />
+                                <textarea cols="60" rows="15" placeholder='문구입력...' value={wordcontent} onChange={onChangeWordcontent} />
                             </div>
                             <div className='addpost-cont-setting'>
                                 <div>위치추가</div>
@@ -144,7 +169,10 @@ const AddPostStyled = styled.div`
         border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
     }
     & .addpost-top div {
-        width: 50px;
+        width: 100px;
+        display: flex;
+        justify-content: right;
+        padding-right: 10px;
     }
     & .addpost-top button {
         font-size: 14px;
@@ -176,6 +204,8 @@ const AddPostStyled = styled.div`
     & .addpost-cont textarea {
         width: 90%;
         border: 0;
+        resize: none;
+        outline: none;
     }
     & .addpost-cont-inner {
         display: flex;

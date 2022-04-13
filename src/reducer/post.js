@@ -54,6 +54,19 @@ export const createDummyPosts = (number) =>
         Comments: []
     }));
 
+const dummyPost = (data) => ({
+    id: shortId.generate(),
+    User: {
+        id: 1,
+        nickname: data.nickname,
+        avatar: data.avatar,
+        address: faker.address.city(),
+    },
+    content: data.content,
+    words: data.words,
+    Comments: []
+});
+
 export const LOAD_ALLPOSTS_REQUEST = "LOAD_ALLPOSTS_REQUEST";
 export const LOAD_ALLPOSTS_SUCCESS = "LOAD_ALLPOSTS_SUCCESS";
 export const LOAD_ALLPOSTS_FAILURE = "LOAD_ALLPOSTS_FAILURE";
@@ -85,6 +98,24 @@ const reducer = (state=intialPosts, action) => {
                 draft.allpostsLoading = false;
                 draft.allpostsDone = false;
                 draft.allpostsError = action.error;
+                break;
+
+            case ADD_POST_REQUEST:
+                draft.addpostsLoading = true;
+                draft.addpostsDone = false;
+                draft.addpostsError = null;
+                break;
+
+            case ADD_POST_SUCCESS:
+                draft.addpostsLoading = false;
+                draft.addpostsDone = true;
+                draft.allPosts.unshift(dummyPost(action.data));
+                break;
+
+            case ADD_POST_FAILURE:
+                draft.addpostsLoading = false;
+                draft.addpostsDone = false;
+                draft.addpostsError = action.error;
                 break;
 
             default: 
