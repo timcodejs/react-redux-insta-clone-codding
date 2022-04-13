@@ -16,8 +16,11 @@ const AddPost = ({display, onClickAddPostExit}) => {
     const dispatch = useDispatch();
 
     const onDrop = useCallback(acceptedFiles => {
-        setMyFiles([...myFiles, ...acceptedFiles]);
-    }, [myFiles]);
+        // setMyFiles([...myFiles, ...acceptedFiles]);
+        setMyFiles(acceptedFiles.map(file => Object.assign(file, {
+            preview: URL.createObjectURL(file)
+        })));
+    }, []);
 
     const remove = file => {
         const newFiles = [...myFiles];
@@ -26,12 +29,14 @@ const AddPost = ({display, onClickAddPostExit}) => {
     };
 
     const {getRootProps, getInputProps} = useDropzone({
+        accept: 'image/*',
         onDrop,
     });
 
     const files = myFiles.map(file => (
         <li className='file-list' key={file.path}>
-            <span>{file.path} - {file.size} bytes</span>
+            {/* <span>{file.path} - {file.size} bytes</span> */}
+            <img className='file-image' src={file.preview} alt="" />
             <button className='file-delete' onClick={() => remove(file)}>remove</button>
         </li>
     ));
@@ -64,7 +69,7 @@ const AddPost = ({display, onClickAddPostExit}) => {
             data: {
                 nickname: info.nickname,
                 avatar: info.avatar,
-                content: myFiles[0].path,
+                content: myFiles[0].preview,
                 words: wordcontent,
             }
         });
@@ -89,15 +94,18 @@ const AddPost = ({display, onClickAddPostExit}) => {
                         <div className='addpost-section'>
                             <div>
                                 <section className="container">
+                                    {myFiles.length === 0 ? (
                                     <div {...getRootProps({className: 'dropzone'})}>
                                         <input {...getInputProps()} />
                                         <div className='addpost-img'><img src="/images/addpost_img.png" alt="이미지 추가" /></div>
                                         <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
                                         <div className='addpost-btn'><button>컴퓨터에서 선택</button></div>
                                     </div>
+                                    ) : (
                                     <aside>
                                         <ul className='file-list'>{files}</ul>
                                     </aside>
+                                    )}
                                 </section>
                             </div>
                         </div>
@@ -258,6 +266,9 @@ const AddPostStyled = styled.div`
         font-size: 20px;
     }
     & .file-delete {
+        position: absolute;
+        top: 20%;
+        left: 48%;
         border-radius: 4px;
         font-size: 13px;
         font-weight: 600;
@@ -265,5 +276,8 @@ const AddPostStyled = styled.div`
         padding: 4px 7px;
         color: rgba(var(--eca,255,255,255),1);
         background-color: rgba(var(--d69,0,149,246),1);
+    }
+    & .file-image {
+        width: 100%;
     }
 `;
