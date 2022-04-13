@@ -11,7 +11,7 @@ const AddPost = ({display, onClickAddPostExit}) => {
     const [postDisplay, setPostDisplay] = useState("none");
     const [next, setNext] = useState(false);
     const [myFiles, setMyFiles] = useState([]);
-    const [wordcontent, onChangeWordcontent] = useInput("");
+    const [wordcontent, onChangeWordcontent, setWordcontent] = useInput("");
     const { info } = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
@@ -35,7 +35,6 @@ const AddPost = ({display, onClickAddPostExit}) => {
 
     const files = myFiles.map(file => (
         <li className='file-list' key={file.path}>
-            {/* <span>{file.path} - {file.size} bytes</span> */}
             <img className='file-image' src={file.preview} alt="" />
             <button className='file-delete' onClick={() => remove(file)}>remove</button>
         </li>
@@ -52,10 +51,9 @@ const AddPost = ({display, onClickAddPostExit}) => {
     const onClickExitBtn = useCallback((file) => {
         onClickAddPostExit();
         setPostDisplay("none");
-        if(myFiles.length > 0) {
-            remove(file);
-        }
+        remove(file);
         setNext((prev) => !prev);
+        setWordcontent("");
     }, [onClickAddPostExit]);
 
     const nextAddPost = useCallback(() => {
@@ -74,6 +72,7 @@ const AddPost = ({display, onClickAddPostExit}) => {
             }
         });
         onClickExitBtn();
+        setWordcontent("");
     }, [info, wordcontent, myFiles]);
 
     return ( 
@@ -267,8 +266,8 @@ const AddPostStyled = styled.div`
     }
     & .file-delete {
         position: absolute;
-        top: 20%;
-        left: 48%;
+        top: 19%;
+        left: 49%;
         border-radius: 4px;
         font-size: 13px;
         font-weight: 600;
@@ -278,6 +277,6 @@ const AddPostStyled = styled.div`
         background-color: rgba(var(--d69,0,149,246),1);
     }
     & .file-image {
-        width: 100%;
+        width: 90%;
     }
 `;
