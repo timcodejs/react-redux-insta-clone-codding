@@ -7,16 +7,17 @@ import { useInput } from '../../../hook/useinput';
 
 
 const AddPost = ({display, onClickAddPostExit}) => {
+    const [innerWidth, setInnerWidth] = useState('604px');
     const [buttonDisplay, setButtonDisplay] = useState("none");
     const [postDisplay, setPostDisplay] = useState("none");
     const [next, setNext] = useState(false);
-    const [myFiles, setMyFiles] = useState([]);
     const [wordcontent, onChangeWordcontent, setWordcontent] = useInput("");
     const { info } = useSelector((state) => state.user);
     const dispatch = useDispatch();
+    
+    const [myFiles, setMyFiles] = useState([]);
 
     const onDrop = useCallback(acceptedFiles => {
-        // setMyFiles([...myFiles, ...acceptedFiles]);
         setMyFiles(acceptedFiles.map(file => Object.assign(file, {
             preview: URL.createObjectURL(file)
         })));
@@ -36,7 +37,6 @@ const AddPost = ({display, onClickAddPostExit}) => {
     const files = myFiles.map(file => (
         <li className='file-list' key={file.path}>
             <img className='file-image' src={file.preview} alt="" />
-            <button className='file-delete' onClick={() => remove(file)}>remove</button>
         </li>
     ));
 
@@ -54,11 +54,20 @@ const AddPost = ({display, onClickAddPostExit}) => {
         remove(file);
         setNext((prev) => !prev);
         setWordcontent("");
+        setInnerWidth('604px');
     }, [onClickAddPostExit]);
 
     const nextAddPost = useCallback(() => {
         setPostDisplay((prev) => !prev);
         setNext((prev) => !prev);
+        setInnerWidth('calc(100% - 340px)');
+    }, []);
+
+    const backPost = useCallback((file) => {
+        remove(file);
+        setNext(false);
+        setPostDisplay("none");
+        setInnerWidth('604px');
     }, []);
 
     const shareAddPost = useCallback(() => {
@@ -73,20 +82,25 @@ const AddPost = ({display, onClickAddPostExit}) => {
         });
         onClickExitBtn();
         setWordcontent("");
+        setInnerWidth('604px');
     }, [info, wordcontent, myFiles]);
 
     return ( 
         <AddPostStyled style={{display: display}}>
             <div>
-                <div className='addpost-inner'>
+                <div className='addpost-inner' style={{width: innerWidth}}>
                     <div className='addpost-top'>
-                        <div></div>
+                        {myFiles.length === 0 ? (
+                            <div className='back-btn'></div>
+                        ) : (
+                            <div className='back-btn' onClick={backPost}><img src="/images/back.png" alt="back img" /></div>
+                        )}
                         <h3>새 게시물 만들기</h3>
                         {!next 
                         ? (
-                            <div onClick={nextAddPost}><button style={{display: buttonDisplay}}>다음</button></div>
+                            <div className='next-btn' onClick={nextAddPost}><button style={{display: buttonDisplay}}>다음</button></div>
                         ) : (
-                            <div onClick={shareAddPost}><button>공유하기</button></div>
+                            <div className='next-btn' onClick={shareAddPost}><button>공유하기</button></div>
                         )}
                     </div>
                     <div className='addpost-bottom'>
@@ -156,8 +170,6 @@ const AddPostStyled = styled.div`
         width: 30px;
     }
     & .addpost-inner {
-        width: 604px;
-        width: calc(100% - 340px);
         max-width: 855px;
         min-width: 348px;
         min-height: 391px;
@@ -175,11 +187,21 @@ const AddPostStyled = styled.div`
         height: 42px;
         border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
     }
-    & .addpost-top div {
+    & .next-btn {
         width: 100px;
         display: flex;
         justify-content: right;
         padding-right: 10px;
+    }
+    & .back-btn {
+        width: 100px;
+        display: flex;
+        justify-content: left;
+        padding-left: 16px;
+    }
+    & .back-btn img {
+        width: 24px;
+        cursor: pointer;
     }
     & .addpost-top button {
         font-size: 14px;
@@ -261,22 +283,11 @@ const AddPostStyled = styled.div`
     }
     & .file-list li {
         display: flex;
+        justify-content: center;
         align-items: center;
         font-size: 20px;
     }
-    & .file-delete {
-        position: absolute;
-        top: 19%;
-        left: 49%;
-        border-radius: 4px;
-        font-size: 13px;
-        font-weight: 600;
-        margin-left: 5px;
-        padding: 4px 7px;
-        color: rgba(var(--eca,255,255,255),1);
-        background-color: rgba(var(--d69,0,149,246),1);
-    }
     & .file-image {
-        width: 90%;
+        width: 93%;
     }
 `;

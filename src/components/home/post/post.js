@@ -90,7 +90,6 @@ const PostStyled = styled.div`
     }
     & .section2 img {
         width: 100%;
-        height: 764px;
     }
     & .section3-icon {
         display: flex;
