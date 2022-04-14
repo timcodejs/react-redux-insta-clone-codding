@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
+import Ellipsis from 'react-ellipsis-component';
+import moment from 'moment';
+import CommentForm from './commentForm';
+
+moment.locale("ko");
 
 const Post = ({post}) => {
-    
+    const time = moment().startOf('day').fromNow();
+    const [likecount, setLikecount] = useState(0);
+    const [wordState, setWordState] = useState(false);
+    const [wordDisplay, setWordDIsplay] = useState('flex');
+
+    const onClickLikeBtn = useCallback((e) => {
+        e.target.src = "/images/insta_heart.png";
+        setLikecount(likecount + 1);
+    }, []);
+
+    const moreWord = useCallback(() => {
+        setWordState(true);
+        setWordDIsplay('block');
+    }, []);
+
     return(
         <PostStyled>
             <div>
@@ -22,16 +41,28 @@ const Post = ({post}) => {
                         <div>
                             <div className="section3-icon">
                                 <div>
-                                    <button><img src="/images/insta_heart_empty.png" alt="" /></button>
+                                    <button><img src="/images/insta_heart_empty.png" alt="" onClick={onClickLikeBtn} /></button>
                                     <button><img src="/images/insta_comment.png" alt="" /></button>
                                     <button><img src="/images/insta_send_empty.png" alt="" /></button>
                                 </div>
                                 <div className="clip-img"><button><img src="/images/profile_icon2.png" alt="" /></button></div>
                             </div>
-                            <div className="section3-like">좋아요 <span>1</span>개</div>
+                            <div className="section3-like">좋아요 <span>{likecount}</span>개</div>
                             <div className="section3-content">
-                                <div className="section3-user"><span>{post.User.nickname}</span> {post.words}</div>
-                                <div className="upload-time">1시간 전</div>
+                                <div className="section3-user" style={{display: wordDisplay}}>
+                                    <span>{post.User.nickname}</span>
+                                    {!wordState ? (
+                                    <Ellipsis
+                                    text={post.words}
+                                    maxLine="1"
+                                    ellipsisNode={<button onClick={moreWord}> ... 더 보기</button>} 
+                                    />
+                                    ) : (
+                                        <span>{post.words}</span>
+                                    )}
+                                </div>
+                                <div><CommentForm /></div>
+                                <div className="upload-time">{time}</div>
                             </div>
                             <div className="section3-comment">
                                 <div>
@@ -122,6 +153,10 @@ const PostStyled = styled.div`
     }
     & .section3-user > span:nth-child(1) {
         font-weight: 600;
+        margin-right: 7px;
+    }
+    & .section3-user > span:nth-child(2) {
+        
     }
     & .upload-time {
         font-size: 10px;
