@@ -29,7 +29,11 @@ const AddComment = ({post}) => {
                     <img src="/images/insta_smile.png" alt="smileimage" />
                     <input type="text" placeholder="댓글 달기..." value={comment} onChange={onChangeComment} />
                 </div>
-                <button onClick={onCLickCommentBtn}>게시</button>
+                {comment !== "" ? (
+                    <BlueBtn onClick={onCLickCommentBtn}>게시</BlueBtn>
+                ) : (
+                    <OpacityBtn onClick={onCLickCommentBtn}>게시</OpacityBtn>
+                )}
             </div>
         </CommentInputStyled>
     )
@@ -60,9 +64,16 @@ const CommentInputStyled = styled.div`
         font-size: 14px;
         font-weight: 600;
         line-height: 18px;
-        opacity: .3;
     }
     input:focus {
         outline: none;
     }
-`
+`;
+
+const OpacityBtn = styled.button`
+    opacity: .3;
+`;
+
+const BlueBtn = styled.button`
+    opacity: 1;
+`;
