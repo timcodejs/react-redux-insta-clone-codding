@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CommentForm = () => {
+const CommentForm = ({post}) => {
     return (
         <CommentFormStyled>
-            <div className='comment-count'><button>댓글 <span>0</span>개 모두 보기</button></div>
+            <div className='comment-count'><button>댓글 <span>{post.Comments.length}</span>개 모두 보기</button></div>
         </CommentFormStyled>
     )
 }

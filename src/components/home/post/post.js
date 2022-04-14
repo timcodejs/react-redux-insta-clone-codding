@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Ellipsis from 'react-ellipsis-component';
 import moment from 'moment';
 import CommentForm from './commentForm';
+import AddComment from './addComment';
 
 moment.locale("ko");
 
@@ -61,18 +62,10 @@ const Post = ({post}) => {
                                         <span>{post.words}</span>
                                     )}
                                 </div>
-                                <div><CommentForm /></div>
+                                <div><CommentForm post={post} /></div>
                                 <div className="upload-time">{time}</div>
                             </div>
-                            <div className="section3-comment">
-                                <div>
-                                    <div>
-                                        <img src="/images/insta_smile.png" alt="smileimage" />
-                                        <input type="text" placeholder="댓글 달기..." />
-                                    </div>
-                                    <button>게시</button>
-                                </div>
-                            </div>
+                            <AddComment post={post} />
                         </div>
                     </div>
                 </div>
@@ -164,34 +157,5 @@ const PostStyled = styled.div`
         font-weight: 400;
         color: rgba(var(--f52,142,142,142),1);
         margin-bottom: 16px;
-    }
-    & .section3-comment {
-        border-top: 1px solid rgba(var(--ce3,239,239,239),1);
-    }
-    & .section3-comment > div {
-        padding: 6px 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    & .section3-comment > div div {
-        display: flex;
-        align-items: center;
-    }
-    & .section3-comment input {
-        border: 0;
-        margin: 0 16px;
-        width: 470px;
-        height: 30px;
-    }
-    & .section3-comment button {
-        color: rgba(var(--d69,0,149,246),1);
-        font-size: 14px;
-        font-weight: 600;
-        line-height: 18px;
-        opacity: .3;
-    }
-    input:focus {
-        outline: none;
     }
 `;

@@ -1,5 +1,5 @@
 import { all, delay, fork, put, takeLatest } from 'redux-saga/effects';
-import { ADD_POST_FAILURE, ADD_POST_REQUEST, ADD_POST_SUCCESS, createDummyPosts, LOAD_ALLPOSTS_FAILURE, LOAD_ALLPOSTS_REQUEST, LOAD_ALLPOSTS_SUCCESS } from '../reducer/post';
+import { ADD_COMMENTS_FAILURE, ADD_COMMENTS_REQUEST, ADD_COMMENTS_SUCCESS, ADD_POST_FAILURE, ADD_POST_REQUEST, ADD_POST_SUCCESS, createDummyPosts, LOAD_ALLPOSTS_FAILURE, LOAD_ALLPOSTS_REQUEST, LOAD_ALLPOSTS_SUCCESS } from '../reducer/post';
 
 function* loadPosts() {
     try {
@@ -17,7 +17,6 @@ function* loadPosts() {
 }
 
 function* addPosts(action) {
-    console.log(action.data.content);
     try {
         yield delay(1000);
         yield put({
@@ -38,6 +37,26 @@ function* addPosts(action) {
     }
 }
 
+function* addComment(action) {
+    try {
+        yield put({
+            type: ADD_COMMENTS_SUCCESS,
+            data: {
+                PostId: action.data.PostId,
+                nickname: action.data.nickname,
+                avatar: action.data.avatar,
+                words: action.data.words,
+            },
+        })
+    } catch (error) {
+        console.log(error);
+        yield put({
+            type: ADD_COMMENTS_FAILURE,
+            data: error.response.data
+        })
+    }
+}
+
 function* watchLoadPosts() {
     yield takeLatest(LOAD_ALLPOSTS_REQUEST, loadPosts);
 }
@@ -46,9 +65,14 @@ function* watchAddPosts() {
     yield takeLatest(ADD_POST_REQUEST, addPosts);
 }
 
+function* watchAddComment() {
+    yield takeLatest(ADD_COMMENTS_REQUEST, addComment);
+}
+
 export default function* postSaga() {
     yield all([
         fork(watchLoadPosts),
         fork(watchAddPosts),
+        fork(watchAddComment),
     ])
 }

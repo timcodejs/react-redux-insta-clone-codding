@@ -14,18 +14,7 @@ const intialPosts = {
             },
             content: faker.image.avatar(),
             words: faker.lorem.paragraph(),
-            Comments: [
-                {
-                    id: shortId.generate(),
-                    User: {
-                        id: shortId.generate(),
-                        nickname: faker.name.lastName(),
-                        avatar: faker.image.avatar(),
-                    },
-                    content: faker.image.avatar(),
-                    words: faker.lorem.word(),
-                }
-            ]
+            Comments: []
         }
     ],
     allpostsLoading: false,
@@ -37,6 +26,12 @@ const intialPosts = {
     removepostsLoading: false,
     removepostsDone: false,
     removepostsError: null,
+    addcommentLoading: false,
+    addcommentDone: false,
+    addcommentError: null,
+    removecommentLoading: false,
+    removecommentDone: false,
+    removecommentError: null,
 }
 
 // 더미데이터
@@ -67,6 +62,16 @@ const dummyPost = (data) => ({
     Comments: []
 });
 
+const dummyComment = (data) => ({
+    id: shortId.generate(),
+    User: {
+        id: 1,
+        nickname: data.nickname,
+        avatar: data.avatar,
+    },
+    words: data.words,
+});
+
 export const LOAD_ALLPOSTS_REQUEST = "LOAD_ALLPOSTS_REQUEST";
 export const LOAD_ALLPOSTS_SUCCESS = "LOAD_ALLPOSTS_SUCCESS";
 export const LOAD_ALLPOSTS_FAILURE = "LOAD_ALLPOSTS_FAILURE";
@@ -78,6 +83,14 @@ export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
 export const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
 export const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
 export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
+
+export const ADD_COMMENTS_REQUEST = "ADD_COMMENTS_REQUEST";
+export const ADD_COMMENTS_SUCCESS = "ADD_COMMENTS_SUCCESS";
+export const ADD_COMMENTS_FAILURE = "ADD_COMMENTS_FAILURE";
+
+export const REMOVE_COMMENTS_REQUEST = "REMOVE_COMMENTS_REQUEST";
+export const REMOVE_COMMENTS_SUCCESS = "REMOVE_COMMENTS_SUCCESS";
+export const REMOVE_COMMENTS_FAILURE = "REMOVE_COMMENTS_FAILURE";
 
 const reducer = (state=intialPosts, action) => {
     return produce(state, (draft) => {
@@ -116,6 +129,27 @@ const reducer = (state=intialPosts, action) => {
                 draft.addpostsLoading = false;
                 draft.addpostsDone = false;
                 draft.addpostsError = action.error;
+                break;
+
+            case ADD_COMMENTS_REQUEST:
+                draft.addcommentLoading = true;
+                draft.addcommentDone = false;
+                draft.addcommentError = null;
+                break;
+
+            case ADD_COMMENTS_SUCCESS:
+                draft.addcommentLoading = false;
+                draft.addcommentDone = true;
+                const post = draft.allPosts.find((v) => v.id === action.data.PostId);
+                console.log('fsdfdf');
+                console.log(post);
+                post.Comments.unshift(dummyComment(action.data));
+                break;
+
+            case ADD_COMMENTS_FAILURE:
+                draft.addcommentLoading = false;
+                draft.addcommentDone = false;
+                draft.addcommentError = action.error;
                 break;
 
             default: 
