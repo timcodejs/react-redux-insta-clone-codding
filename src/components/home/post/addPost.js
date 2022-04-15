@@ -52,7 +52,7 @@ const AddPost = ({display, onClickAddPostExit}) => {
         onClickAddPostExit();
         setPostDisplay("none");
         remove(file);
-        setNext((prev) => !prev);
+        setNext(false);
         setWordcontent("");
         setInnerWidth('604px');
     }, [onClickAddPostExit]);
@@ -81,8 +81,6 @@ const AddPost = ({display, onClickAddPostExit}) => {
             }
         });
         onClickExitBtn();
-        setWordcontent("");
-        setInnerWidth('604px');
     }, [info, wordcontent, myFiles]);
 
     return ( 
