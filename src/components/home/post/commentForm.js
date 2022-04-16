@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
 const CommentForm = ({post}) => {
+    const onoClickPostDetail = useCallback(() => {
+
+    }, []);
+
     return (
         <CommentFormStyled>
-            <div className='comment-count'><button>댓글 <span>{post.Comments.length}</span>개 모두 보기</button></div>
+            {post.Comments.length !== 0 && (
+                <div className='comment-count' onClick={onoClickPostDetail}><button>댓글 <span>{post.Comments.length}</span>개 모두 보기</button></div>
+            )}
         </CommentFormStyled>
     )
 }

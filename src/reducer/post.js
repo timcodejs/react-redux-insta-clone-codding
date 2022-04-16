@@ -32,6 +32,7 @@ const intialPosts = {
     removecommentLoading: false,
     removecommentDone: false,
     removecommentError: null,
+    allpostsReset: false,
 }
 
 // 더미데이터
@@ -92,6 +93,9 @@ export const REMOVE_COMMENTS_REQUEST = "REMOVE_COMMENTS_REQUEST";
 export const REMOVE_COMMENTS_SUCCESS = "REMOVE_COMMENTS_SUCCESS";
 export const REMOVE_COMMENTS_FAILURE = "REMOVE_COMMENTS_FAILURE";
 
+export const ALLPOSTS_RESET = "ALLPOSTS_RESET";
+
+
 const reducer = (state=intialPosts, action) => {
     return produce(state, (draft) => {
         switch(action.type) {
@@ -99,6 +103,7 @@ const reducer = (state=intialPosts, action) => {
                 draft.allpostsLoading = true;
                 draft.allpostsDone = false;
                 draft.allpostsError = null;
+                draft.allpostsReset = false;
                 break;
 
             case LOAD_ALLPOSTS_SUCCESS:
@@ -141,8 +146,6 @@ const reducer = (state=intialPosts, action) => {
                 draft.addcommentLoading = false;
                 draft.addcommentDone = true;
                 const post = draft.allPosts.find((v) => v.id === action.data.PostId);
-                console.log('fsdfdf');
-                console.log(post);
                 post.Comments.unshift(dummyComment(action.data));
                 break;
 
@@ -150,6 +153,11 @@ const reducer = (state=intialPosts, action) => {
                 draft.addcommentLoading = false;
                 draft.addcommentDone = false;
                 draft.addcommentError = action.error;
+                break;
+
+            case ALLPOSTS_RESET:
+                draft.allpostsReset = true;
+                draft.allPosts = draft.allPosts.filter((v) => v.id === action.data);
                 break;
 
             default: 

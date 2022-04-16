@@ -1,4 +1,5 @@
 import { all, delay, fork, takeLatest, put } from 'redux-saga/effects';
+import { ALLPOSTS_RESET } from '../reducer/post';
 import { LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS, LOG_OUT_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from '../reducer/user';
 
 function* login(action) {
@@ -22,7 +23,11 @@ function* logout() {
         yield delay(500);
         yield put({
             type: LOG_OUT_SUCCESS,
-        })
+        });
+        yield put({
+            type: ALLPOSTS_RESET,
+            data: 1
+        });
     } catch (error) {
         console.log(error);
         yield put({

@@ -10,12 +10,21 @@ const LayoutNav = ({ children }) => {
     const dispatch = useDispatch();
     const { info } = useSelector((state) => state.user);
     const [plusPost, setPlusPost] = useState('none');
+    const [popupDisplay, setPopupDisplay] = useState('none');
     
     useEffect(() => {
         if(!info) {
             navigator('/login');
         }
     }, [info, navigator]);
+
+    const onClickPopupList = useCallback(() => {
+        if(popupDisplay === 'none') {
+            setPopupDisplay('block');
+        } else if(popupDisplay === 'block') {
+            setPopupDisplay('none');
+        }
+    }, [popupDisplay]);
 
     const onClickLogout = useCallback(() => {
         dispatch({
@@ -59,9 +68,39 @@ const LayoutNav = ({ children }) => {
                             <button><img src="/images/insta_heart_empty.png" alt="home icon" /></button>
                         </li>
                         <li>
-                            <button className="user-avatar" onClick={onClickLogout}>
+                            <button className="user-avatar" onClick={onClickPopupList}>
                                 {info && (<img src={info.avatar} alt="login user avatarimage" />)}
                             </button>
+                            <div className="user-avatar-list" style={{display: popupDisplay}}>
+                                <div></div>
+                                <ul>
+                                    <li>
+                                        <button>
+                                            <img src="/images/profile_icon1.png" alt="프로필 이미지" /> 프로필
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <img src="/images/profile_icon2.png" alt="저장 이미지" /> 저장됨
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <img src="/images/profile_icon3.png" alt="설정 이미지" /> 설정
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button>
+                                            <img src="/images/profile_icon4.png" alt="계정전환 이미지" /> 계정 전환
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button className="logout" onClick={onClickLogout}>
+                                            로그아웃
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -116,6 +155,45 @@ const LayoutNavStyled = styled.div`
     & .user-avatar img {
         width: 24px;
         border-radius: 50%;
+    }
+    & .user-avatar-list {
+        position: absolute;
+    top: 54px;
+    left: 50%;
+    transform: translate(113%, 2%);
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 2px 2px 8px #d9d9d9;
+    font-size: 14px;
+    }
+    & .user-avatar-list > div {
+        position: absolute;
+        background: rgba(var(--d87,255,255,255),1);
+        border: 1px solid rgba(var(--f23,255,255,255),1);
+        box-shadow: -4px -4px 5px rgba(var(--jb7,0,0,0),.0775);
+        width: 13px;
+        height: 13px;
+        transform: rotate(45deg);
+        top: -5px;
+        right: 37px;
+    }
+    & .user-avatar-list ul {
+        padding: 0;
+    }
+    & .user-avatar-list li button {
+        display: flex;
+        align-items: center;
+        width: 230px;
+        padding: 10px 16px;
+    }
+    & .user-avatar-list li button img {
+        width: 16px;
+        margin: 0;
+        margin-right: 10px;
+    }
+    & .logout {
+        padding-left: 10px;
+        border-top: 1px solid rgba(var(--b6a,219,219,219),1);
     }
 `;
 
