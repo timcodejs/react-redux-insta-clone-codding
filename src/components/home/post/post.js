@@ -111,6 +111,7 @@ const PostStyled = styled.div`
     }
     & .moreBtnimg img {        
         width: 15px;
+        cursor: pointer;
     }
     & .section2 img {
         width: 100%;
