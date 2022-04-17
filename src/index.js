@@ -10,7 +10,7 @@ const rootNode = document.getElementById('root'); // React18
 // React18
 ReactDOM.createRoot(rootNode).render(
   <Provider store={store}>
-      <App />
+    <App />
   </Provider>
 );
 

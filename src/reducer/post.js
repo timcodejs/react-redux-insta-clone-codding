@@ -136,6 +136,24 @@ const reducer = (state=intialPosts, action) => {
                 draft.addpostsError = action.error;
                 break;
 
+            case REMOVE_POST_REQUEST:
+                draft.removepostsLoading = true;
+                draft.removepostsDone = false;
+                draft.removepostsError = null;
+                break;
+
+            case REMOVE_POST_SUCCESS:
+                draft.removepostsLoading = false;
+                draft.removepostsDone = true;
+                draft.allPosts = draft.allPosts.filter((v) => v.id !== action.data);
+                break;
+
+            case REMOVE_POST_FAILURE:
+                draft.removepostsLoading = false;
+                draft.removepostsDone = false;
+                draft.removepostsError = action.error;
+                break;
+
             case ADD_COMMENTS_REQUEST:
                 draft.addcommentLoading = true;
                 draft.addcommentDone = false;
