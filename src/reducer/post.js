@@ -26,6 +26,9 @@ const intialPosts = {
     removepostsLoading: false,
     removepostsDone: false,
     removepostsError: null,
+    updatepostLoading: true,
+    updatepostDone: false,
+    updatepostError: null,
     addcommentLoading: false,
     addcommentDone: false,
     addcommentError: null,
@@ -84,6 +87,10 @@ export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
 export const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
 export const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
 export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
+
+export const UPDATE_POST_REQUEST = "UPDATE_POST_REQUEST";
+export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
+export const UPDATE_POST_FAILURE = "UPDATE_POST_FAILURE";
 
 export const ADD_COMMENTS_REQUEST = "ADD_COMMENTS_REQUEST";
 export const ADD_COMMENTS_SUCCESS = "ADD_COMMENTS_SUCCESS";
@@ -152,6 +159,24 @@ const reducer = (state=intialPosts, action) => {
                 draft.removepostsLoading = false;
                 draft.removepostsDone = false;
                 draft.removepostsError = action.error;
+                break;
+
+            case UPDATE_POST_REQUEST:
+                draft.updatepostLoading = true;
+                draft.updatepostDone = false;
+                draft.updatepostError = null;
+                break;
+
+            case UPDATE_POST_SUCCESS:
+                draft.updatepostLoading = false;
+                draft.updatepostDone = true;
+                draft.allPosts.find((v) => v.id === action.data.PostId).words = action.data.words;
+                break;
+
+            case UPDATE_POST_FAILURE:
+                draft.updatepostLoading = false;
+                draft.updatepostDone = false;
+                draft.updatepostError = action.error;
                 break;
 
             case ADD_COMMENTS_REQUEST:

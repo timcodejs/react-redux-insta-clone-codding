@@ -1,20 +1,18 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { REMOVE_POST_REQUEST } from '../../../reducer/post';
+import UpdatePost from './updatePost';
 
 const ModalPopup = ({post, setIsOpen}) => {
     const dispatch = useDispatch();
     const { info } = useSelector((state) => state.user);
+    const [updatePost, setUpdatePost] = useState('none');
 
     const onClickCencleBtn = useCallback(() => {
         setIsOpen({
             state: false, 
-            post: {
-                User: {
-                    id: 1
-                }
-            }
+            post: post
         });
     }, []);
 
@@ -25,12 +23,16 @@ const ModalPopup = ({post, setIsOpen}) => {
         });
         setIsOpen({
             state: false, 
-            post: {
-                User: {
-                    id: 1
-                }
-            }
+            post: post
         });
+    }, []);
+
+    const onCLickUpdatePost = useCallback(() => {
+        setUpdatePost('block');
+    }, []);
+
+    const onClickAddPostExit = useCallback(() => {
+        setUpdatePost('none');
     }, []);
     
     return (
@@ -38,7 +40,7 @@ const ModalPopup = ({post, setIsOpen}) => {
             {info && post.User.id === info.id ? (
                 <ul>
                     <li><button className="redText" onClick={onClickDeletePost}>삭제</button></li>
-                    <li><button>수정</button></li>
+                    <li><button onClick={onCLickUpdatePost}>수정</button></li>
                     <li><button onClick={onClickCencleBtn}>취소</button></li>
                 </ul>
             ) : ( 
@@ -48,6 +50,7 @@ const ModalPopup = ({post, setIsOpen}) => {
                     <li><button onClick={onClickCencleBtn}>취소</button></li>
                 </ul>
             )}
+            <UpdatePost display={updatePost} onClickAddPostExit={onClickAddPostExit} onClickCencleBtn={onClickCencleBtn} post={post} />
         </ModalPopupStyled>
     )
 }
