@@ -5,7 +5,7 @@ import PostForm from "./post/postForm";
 import Info from "./info/info";
 import styled from "styled-components";
 
-const HomeMain = () => {
+const HomeMain = ({setIsOpen}) => {
     const navigator = useNavigate();
     const { info } = useSelector((state) => state.user);
 
@@ -17,7 +17,7 @@ const HomeMain = () => {
 
     return(
         <HomeMainStyled>
-            <PostForm />
+            <PostForm setIsOpen={setIsOpen} />
             <Info />
         </HomeMainStyled>
     )

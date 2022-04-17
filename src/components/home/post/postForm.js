@@ -5,7 +5,7 @@ import Post from "./post";
 import { useDispatch, useSelector } from "react-redux";
 import { LOAD_ALLPOSTS_REQUEST } from "../../../reducer/post";
 
-const PostForm = () => {
+const PostForm = ({setIsOpen}) => {
     const dispatch = useDispatch();
     const { allPosts } = useSelector((state) => state.post);
     const { info } = useSelector((state) => state.user);
@@ -21,7 +21,7 @@ const PostForm = () => {
     return(
         <PostFormstyled>
             <Story />
-            {allPosts && allPosts.map((post) => <Post key={post.id} post={post} /> )}
+            {allPosts && allPosts.map((post) => <Post key={post.id} post={post} setIsOpen={setIsOpen} /> )}
         </PostFormstyled>
     )
 }

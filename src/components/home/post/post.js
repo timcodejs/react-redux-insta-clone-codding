@@ -4,16 +4,14 @@ import Ellipsis from 'react-ellipsis-component';
 import moment from 'moment';
 import CommentForm from './commentForm';
 import AddComment from './addComment';
-import ModalPopup from './modalPopup';
 
 moment.locale("ko");
 
-const Post = ({post}) => {
+const Post = ({post, setIsOpen}) => {
     const time = moment().startOf('day').fromNow();
     const [likecount, setLikecount] = useState(0);
     const [wordState, setWordState] = useState(false);
     const [wordDisplay, setWordDIsplay] = useState('flex');
-    const [popupDisplay, setPopupDisplay] = useState('none');
 
     const onClickLikeBtn = useCallback((e) => {
         e.target.src = "/images/insta_heart.png";
@@ -26,7 +24,7 @@ const Post = ({post}) => {
     }, []);
 
     const onClickMoreBtn = useCallback(() => {
-        setPopupDisplay('block');
+        setIsOpen({state: true, post: post});
     }, []);
 
     return(
@@ -42,7 +40,6 @@ const Post = ({post}) => {
                             </div>
                         </div>
                         <div className="moreBtnimg" onClick={onClickMoreBtn}><img src="/images/insta_morebtn.png" alt="more button" /></div>
-                        <ModalPopup post={post}  display={popupDisplay} setPopupDisplay={setPopupDisplay} />
                     </div>
                     <div className="section2"><img src={post.content} alt="img" /></div>
                     <div className="section3">
