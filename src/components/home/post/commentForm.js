@@ -12,6 +12,10 @@ const CommentForm = ({post}) => {
         setCountDisplay('none');
     }, []);
 
+    const onClickCommentLikeBtn = useCallback((e) => {
+        e.target.src = "/images/insta_heart.png";
+    }, []);
+
     return (
         <CommentFormStyled>
             {post.Comments.length !== 0 && (
@@ -26,7 +30,7 @@ const CommentForm = ({post}) => {
                                         <span>{info.nickname}</span> 
                                         <span>{v.words}</span>
                                     </div>
-                                    <div><button><img src="/images/insta_heart_empty.png" alt="like" /></button></div>
+                                    <div><button><img src="/images/insta_heart_empty.png" alt="like" onClick={onClickCommentLikeBtn} /></button></div>
                                 </li>
                             ))}
                         </ul>
