@@ -4,18 +4,38 @@ import Ellipsis from 'react-ellipsis-component';
 import moment from 'moment';
 import CommentForm from './commentForm';
 import AddComment from './addComment';
+import { useDispatch } from "react-redux";
+import { UPDATE_LIKE_POST_REQUEST } from "../../../reducer/post";
 
 moment.locale("ko");
 
 const Post = ({post, setIsOpen}) => {
     const time = moment().startOf('day').fromNow();
-    const [likecount, setLikecount] = useState(0);
+    const dispatch = useDispatch();
     const [wordState, setWordState] = useState(false);
     const [wordDisplay, setWordDIsplay] = useState('flex');
 
     const onClickLikeBtn = useCallback((e) => {
-        e.target.src = "/images/insta_heart.png";
-        setLikecount(likecount + 1);
+        if (e.target.src === "http://localhost:3000/images/insta_heart_empty.png") {
+            e.target.src = "/images/insta_heart_red.png";
+            dispatch({
+                type: UPDATE_LIKE_POST_REQUEST,
+                data: {
+                    PostId: post.id,
+                    likecount: 1
+                }
+            })
+        } else if(e.target.src === "http://localhost:3000/images/insta_heart_red.png") {
+            e.target.src = "/images/insta_heart_empty.png";
+            dispatch({
+                type: UPDATE_LIKE_POST_REQUEST,
+                data: {
+                    PostId: post.id,
+                    likecount: 0
+                }
+            })
+        }
+        
     }, []);
 
     const moreWord = useCallback(() => {
@@ -25,7 +45,7 @@ const Post = ({post, setIsOpen}) => {
 
     const onClickMoreBtn = useCallback(() => {
         setIsOpen({state: true, post: post});
-    }, []);
+    }, [post]);
 
     return(
         <PostStyled>
@@ -52,7 +72,7 @@ const Post = ({post, setIsOpen}) => {
                                 </div>
                                 <div className="clip-img"><button><img src="/images/profile_icon2.png" alt="" /></button></div>
                             </div>
-                            <div className="section3-like">좋아요 <span>{likecount}</span>개</div>
+                            <div className="section3-like">좋아요 <span>{post.likecount}</span>개</div>
                             <div className="section3-content">
                                 <div className="section3-user" style={{display: wordDisplay}}>
                                     <span>{post.User.nickname}</span>

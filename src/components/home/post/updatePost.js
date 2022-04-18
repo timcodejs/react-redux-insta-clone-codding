@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../../../hook/useinput';
@@ -108,6 +108,8 @@ const UpdatePostStyled = styled.div`
         display: flex;
         justify-content: left;
         padding-left: 16px;
+        font-size: 14px;
+        font-weight: 600;
         cursor: pointer;
     }
     & .addpost-top button {

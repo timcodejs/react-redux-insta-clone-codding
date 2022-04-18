@@ -35,6 +35,12 @@ const intialPosts = {
     removecommentLoading: false,
     removecommentDone: false,
     removecommentError: null,
+    updatelikepostLoading: false,
+    updatelikepostDone: false,
+    updatelikepostError: false,
+    updatelikecommentLoading: false,
+    updatelikecommentDone: false,
+    updatelikecommentError: false,
     allpostsReset: false,
 }
 
@@ -50,6 +56,7 @@ export const createDummyPosts = (number) =>
         },
         content: faker.image.avatar(),
         words: faker.lorem.paragraph(),
+        likecount: 0,
         Comments: []
     }));
 
@@ -63,6 +70,7 @@ const dummyPost = (data) => ({
     },
     content: data.content,
     words: data.words,
+    likecount: 0,
     Comments: []
 });
 
@@ -74,6 +82,7 @@ const dummyComment = (data) => ({
         avatar: data.avatar,
     },
     words: data.words,
+    likecount: 0,
 });
 
 export const LOAD_ALLPOSTS_REQUEST = "LOAD_ALLPOSTS_REQUEST";
@@ -92,6 +101,10 @@ export const UPDATE_POST_REQUEST = "UPDATE_POST_REQUEST";
 export const UPDATE_POST_SUCCESS = "UPDATE_POST_SUCCESS";
 export const UPDATE_POST_FAILURE = "UPDATE_POST_FAILURE";
 
+export const UPDATE_LIKE_POST_REQUEST = "UPDATE_LIKE_POST_REQUEST";
+export const UPDATE_LIKE_POST_SUCCESS = "UPDATE_LIKE_POST_SUCCESS";
+export const UPDATE_LIKE_POST_FAILURE = "UPDATE_LIKE_POST_FAILURE";
+
 export const ADD_COMMENTS_REQUEST = "ADD_COMMENTS_REQUEST";
 export const ADD_COMMENTS_SUCCESS = "ADD_COMMENTS_SUCCESS";
 export const ADD_COMMENTS_FAILURE = "ADD_COMMENTS_FAILURE";
@@ -99,6 +112,10 @@ export const ADD_COMMENTS_FAILURE = "ADD_COMMENTS_FAILURE";
 export const REMOVE_COMMENTS_REQUEST = "REMOVE_COMMENTS_REQUEST";
 export const REMOVE_COMMENTS_SUCCESS = "REMOVE_COMMENTS_SUCCESS";
 export const REMOVE_COMMENTS_FAILURE = "REMOVE_COMMENTS_FAILURE";
+
+export const UPDATE_LIKE_COMMENT_REQUEST = "UPDATE_LIKE_COMMENT_REQUEST";
+export const UPDATE_LIKE_COMMENT_SUCCESS = "UPDATE_LIKE_COMMENT_SUCCESS";
+export const UPDATE_LIKE_COMMENT_FAILURE = "UPDATE_LIKE_COMMENT_FAILURE";
 
 export const ALLPOSTS_RESET = "ALLPOSTS_RESET";
 
@@ -179,6 +196,24 @@ const reducer = (state=intialPosts, action) => {
                 draft.updatepostError = action.error;
                 break;
 
+            case UPDATE_LIKE_POST_REQUEST:
+                draft.updatelikepostLoading = true;
+                draft.updatelikepostDone = false;
+                draft.updatelikepostError = null;
+                break;
+
+            case UPDATE_LIKE_POST_SUCCESS:
+                draft.updatelikepostLoading = false;
+                draft.updatelikepostDone = true;
+                draft.allPosts.find((v) => v.id === action.data.PostId).likecount = action.data.likecount;
+                break;
+
+            case UPDATE_LIKE_POST_FAILURE:
+                draft.updatelikepostLoading = false;
+                draft.updatelikepostDone = false;
+                draft.updatelikepostError = action.error;
+                break;
+
             case ADD_COMMENTS_REQUEST:
                 draft.addcommentLoading = true;
                 draft.addcommentDone = false;
@@ -198,6 +233,43 @@ const reducer = (state=intialPosts, action) => {
                 draft.addcommentError = action.error;
                 break;
 
+            case REMOVE_COMMENTS_REQUEST:
+                draft.removecommentLoading = true;
+                draft.removecommentDone = false;
+                draft.removecommentError = null;
+                break;
+
+            case REMOVE_COMMENTS_SUCCESS:
+                draft.removecommentLoading = false;
+                draft.removecommentDone = true;
+                draft.allPosts.find((v) => v.id === action.data.PostId).Comments = 
+                draft.allPosts.find((v) => v.id === action.data.PostId).Comments.filter((v) => v.id !== action.data.commentId);
+                break;
+
+            case REMOVE_COMMENTS_FAILURE:
+                draft.removecommentLoading = false;
+                draft.removecommentDone = false;
+                draft.removecommentError = action.error;
+                break;
+
+            case UPDATE_LIKE_COMMENT_REQUEST:
+                draft.updatelikecommentLoading = true;
+                draft.updatelikecommentDone = false;
+                draft.updatelikecommentError = null;
+                break;
+
+            case UPDATE_LIKE_COMMENT_SUCCESS:
+                draft.updatelikecommentLoading = false;
+                draft.updatelikecommentDone = true;
+                draft.allPosts.find((v) => v.id === action.data.PostId).Comments.find((v) => v.id === action.data.commentId).likecount = action.data.likecount;
+                break;
+
+            case UPDATE_LIKE_COMMENT_FAILURE:
+                draft.updatelikecommentLoading = false;
+                draft.updatelikecommentDone = false;
+                draft.updatelikecommentError = action.error;
+                break;
+                
             case ALLPOSTS_RESET:
                 draft.allpostsReset = true;
                 draft.allPosts = draft.allPosts.filter((v) => v.id === action.data);
