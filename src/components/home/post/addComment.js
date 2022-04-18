@@ -9,7 +9,8 @@ const AddComment = ({post}) => {
     const dispatch = useDispatch();
     const { info } = useSelector((state) => state.user);
 
-    const onCLickCommentBtn = useCallback(() => {
+    const onCLickCommentBtn = useCallback((e) => {
+        e.preventDefault();
         dispatch({
             type: ADD_COMMENTS_REQUEST,
             data: {
@@ -24,17 +25,17 @@ const AddComment = ({post}) => {
 
     return (
         <CommentInputStyled>
-            <div>
+            <form onSubmit={onCLickCommentBtn}>
                 <div>
                     <img src="/images/insta_smile.png" alt="smileimage" />
-                    <input type="text" placeholder="댓글 달기..." value={comment} onChange={onChangeComment} />
+                    <input type="text" placeholder="댓글 달기..." value={comment} onChange={onChangeComment} autoComplete="off" required />
                 </div>
                 {comment !== "" ? (
-                    <BlueBtn onClick={onCLickCommentBtn}>게시</BlueBtn>
+                    <BlueBtn type='submit'>게시</BlueBtn>
                 ) : (
-                    <OpacityBtn onClick={onCLickCommentBtn}>게시</OpacityBtn>
+                    <OpacityBtn type='submit'>게시</OpacityBtn>
                 )}
-            </div>
+            </form>
         </CommentInputStyled>
     )
 }
@@ -43,13 +44,13 @@ export default AddComment;
 
 const CommentInputStyled = styled.div`
     border-top: 1px solid rgba(var(--ce3,239,239,239),1);
-    & > div {
+    & > form {
         padding: 6px 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
-    & > div div {
+    & > form div {
         display: flex;
         align-items: center;
     }

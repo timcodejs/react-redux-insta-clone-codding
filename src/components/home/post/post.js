@@ -16,7 +16,7 @@ const Post = ({post, setIsOpen}) => {
     const [wordDisplay, setWordDIsplay] = useState('flex');
 
     const onClickLikeBtn = useCallback((e) => {
-        if (e.target.src === "http://localhost:3000/images/insta_heart_empty.png") {
+        if (e.target.src === `${window.location.href}images/insta_heart_empty.png`) {
             e.target.src = "/images/insta_heart_red.png";
             dispatch({
                 type: UPDATE_LIKE_POST_REQUEST,
@@ -25,7 +25,7 @@ const Post = ({post, setIsOpen}) => {
                     likecount: 1
                 }
             })
-        } else if(e.target.src === "http://localhost:3000/images/insta_heart_red.png") {
+        } else if(e.target.src === `${window.location.href}images/insta_heart_red.png`) {
             e.target.src = "/images/insta_heart_empty.png";
             dispatch({
                 type: UPDATE_LIKE_POST_REQUEST,
