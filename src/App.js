@@ -2,6 +2,7 @@ import './App.css';
 import Home from './pages/home';
 import Login from './pages/login';
 import Register from './pages/register';
+import NotFount from './pages/notFount';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 
@@ -14,6 +15,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
+          <Route path='*' element={<NotFount />} />
         </Routes>
       </BrowserRouter>
     </>
