@@ -56,13 +56,13 @@ const LayoutNav = ({ children }) => {
                             <Link to="/"><img src="/images/insta_home.png" alt="home icon" /></Link>
                         </li>
                         <li>
-                            <Link to="/direct"><img src="/images/insta_send_empty.png" alt="home icon" /></Link>
+                            <Link to="/"><img src="/images/insta_send_empty.png" alt="home icon" /></Link>
                         </li>
                         <li>
                             <button onClick={onCLickAddPosthandler}><img src="/images/insta_plus_empty.png" alt="home icon" /></button>
                         </li>
                         <li>
-                            <Link to="/explore"><img src="/images/insta_find_empty.png" alt="home icon" /></Link>
+                            <Link to="/"><img src="/images/insta_find_empty.png" alt="home icon" /></Link>
                         </li>
                         <li>
                             <button><img src="/images/insta_heart_empty.png" alt="home icon" /></button>
