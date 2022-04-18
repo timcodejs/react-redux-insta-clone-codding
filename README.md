@@ -14,3 +14,23 @@
 | 10일차 | ✅ | - 필요없는 파일 정리 |
 | 11일차 | ✅ | - reducer, saga의 post.js에 '게시물 삭제' 등록<br/>- react-modal 라이브러리를 사용항 전역으로 모달 관리(useModal.js)<br/>- reducer, saga의 post.js에 '게시물 업데이트' 등록<br/>- updatePost.js 제작<br/>- reducer, saga의 post.js에 '댓글 삭제', '좋아요 카운트' 등록<br/>- commentForm.js 로직 수정<br/>- 정의되지 않은 경로 접근 방지용 페이지 제작 및 라우팅 등록(notFound.js) |
 
+# Preview
+1. 로그인
+<img width="1440" alt="login" src="https://user-images.githubusercontent.com/46413981/163806265-b2e1c02a-25e9-40a0-a41e-256969ae51c3.png">
+2. 회원가입
+<img width="1440" alt="register" src="https://user-images.githubusercontent.com/46413981/163806267-d46c0dd6-8382-40a4-a4c4-2415f6e06c02.png">
+3. 메인 페이지
+<img width="1440" alt="home" src="https://user-images.githubusercontent.com/46413981/163806269-09047df5-1ff3-40b2-aaf9-614bc6605058.png">
+4. 로그아웃
+<img width="423" alt="logout" src="https://user-images.githubusercontent.com/46413981/163806264-d7432c2e-a9fd-4daf-86c9-bd215b339cbe.png">
+5. 게시물 업로드
+<img width="1440" alt="upload1" src="https://user-images.githubusercontent.com/46413981/163806220-d5de1cc1-ac01-46ac-9fb4-1ee02df62994.png">
+<img width="1440" alt="upload2" src="https://user-images.githubusercontent.com/46413981/163806236-2a64a2b2-821b-4f2a-9a91-ddc76afcfd27.png">
+<img width="1440" alt="upload3" src="https://user-images.githubusercontent.com/46413981/163806247-e321ca81-4921-4425-bf2a-035429ab3e67.png">
+6. 댓글 달기
+<img width="665" alt="comment1" src="https://user-images.githubusercontent.com/46413981/163806253-e9377ed0-34c0-49b8-a9f6-67df39869f9a.png">
+<img width="1440" alt="comment2" src="https://user-images.githubusercontent.com/46413981/163806255-66fb868e-f7ab-47bf-85a5-308a5af7734e.png">
+7. 게시물 삭제
+<img width="1440" alt="delete" src="https://user-images.githubusercontent.com/46413981/163806261-5f40d5e3-0507-44ea-92bc-b3d249cdc17b.png">
+
+
