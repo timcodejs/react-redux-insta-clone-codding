@@ -17,7 +17,7 @@ const Post = ({post, setIsOpen}) => {
 
     const onClickLikeBtn = useCallback((e) => {
         if (e.target.src === `${window.location.href}images/insta_heart_empty.png`) {
-            e.target.src = "/images/insta_heart_red.png";
+            e.target.src = "images/insta_heart_red.png";
             dispatch({
                 type: UPDATE_LIKE_POST_REQUEST,
                 data: {
@@ -26,7 +26,7 @@ const Post = ({post, setIsOpen}) => {
                 }
             })
         } else if(e.target.src === `${window.location.href}images/insta_heart_red.png`) {
-            e.target.src = "/images/insta_heart_empty.png";
+            e.target.src = "images/insta_heart_empty.png";
             dispatch({
                 type: UPDATE_LIKE_POST_REQUEST,
                 data: {
@@ -66,7 +66,7 @@ const Post = ({post, setIsOpen}) => {
                         <div>
                             <div className="section3-icon">
                                 <div>
-                                    <button><img src="/images/insta_heart_empty.png" alt="" onClick={onClickLikeBtn} /></button>
+                                    <button><img src="images/insta_heart_empty.png" alt="" onClick={onClickLikeBtn} /></button>
                                     <button><img src="/images/insta_comment.png" alt="" /></button>
                                     <button><img src="/images/insta_send_empty.png" alt="" /></button>
                                 </div>
