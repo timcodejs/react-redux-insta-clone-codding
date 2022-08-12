@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/react-redux-insta-clone-codding/static/css/main.31d6cfe0.css",
-    "main.js": "/react-redux-insta-clone-codding/static/js/main.7e64ef6c.js",
+    "main.js": "/react-redux-insta-clone-codding/static/js/main.2c5b3278.js",
     "index.html": "/react-redux-insta-clone-codding/index.html",
-    "main.7e64ef6c.js.map": "/react-redux-insta-clone-codding/static/js/main.7e64ef6c.js.map"
+    "main.2c5b3278.js.map": "/react-redux-insta-clone-codding/static/js/main.2c5b3278.js.map"
   },
   "entrypoints": [
     "static/css/main.31d6cfe0.css",
-    "static/js/main.7e64ef6c.js"
+    "static/js/main.2c5b3278.js"
   ]
 }
