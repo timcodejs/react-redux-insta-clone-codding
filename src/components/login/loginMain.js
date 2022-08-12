@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useInput } from '../../hook/useinput';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOG_IN_REQUEST } from '../../reducer/user';
+import { PUBLIC_URL, FACEBOOK_IMG_URL } from "../../modules/module";
 
 const LoginMain = () => {
     const [email, onChangeEmail] = useInput("");
@@ -32,7 +33,7 @@ const LoginMain = () => {
     return(
         <>  
             <LoginMainStyled>
-                <div className='logo'><button><img src="/images/logo_L.png" alt="logo" /></button></div>
+                <div className='logo'><button><img src={PUBLIC_URL + '/images/logo_L.png'} alt="logo" /></button></div>
                 <form onSubmit={onSubmitLogin}>
                     <div>
                         <label htmlFor="user-email"></label>
@@ -175,7 +176,7 @@ const FacebookBtn = styled.button`
     color: #385185;
     font-weight: 600;
     font-size: 14px;
-    background: url('/images/facebook_img.png') no-repeat center left/16px;
+    background: url(${FACEBOOK_IMG_URL}) no-repeat center left/16px;
     padding-left: 25px;
 `;
 

@@ -6,6 +6,7 @@ import CommentForm from './commentForm';
 import AddComment from './addComment';
 import { useDispatch } from "react-redux";
 import { UPDATE_LIKE_POST_REQUEST } from "../../../reducer/post";
+import { PUBLIC_URL } from "../../../modules/module";
 
 moment.locale("ko");
 
@@ -17,7 +18,7 @@ const Post = ({post, setIsOpen}) => {
 
     const onClickLikeBtn = useCallback((e) => {
         if (e.target.src === `${window.location.href}images/insta_heart_empty.png`) {
-            e.target.src = "images/insta_heart_red.png";
+            e.target.src = PUBLIC_URL+"/images/insta_heart_red.png";
             dispatch({
                 type: UPDATE_LIKE_POST_REQUEST,
                 data: {
@@ -26,7 +27,7 @@ const Post = ({post, setIsOpen}) => {
                 }
             })
         } else if(e.target.src === `${window.location.href}images/insta_heart_red.png`) {
-            e.target.src = "images/insta_heart_empty.png";
+            e.target.src = PUBLIC_URL+"/images/insta_heart_empty.png";
             dispatch({
                 type: UPDATE_LIKE_POST_REQUEST,
                 data: {
@@ -59,18 +60,18 @@ const Post = ({post, setIsOpen}) => {
                                 <p>{post.User.address}</p>
                             </div>
                         </div>
-                        <div className="moreBtnimg" onClick={onClickMoreBtn}><img src="/images/insta_morebtn.png" alt="more button" /></div>
+                        <div className="moreBtnimg" onClick={onClickMoreBtn}><img src={PUBLIC_URL+"/images/insta_morebtn.png"} alt="more button" /></div>
                     </div>
                     <div className="section2"><img src={post.content} alt="img" /></div>
                     <div className="section3">
                         <div>
                             <div className="section3-icon">
                                 <div>
-                                    <button><img src="images/insta_heart_empty.png" alt="" onClick={onClickLikeBtn} /></button>
-                                    <button><img src="/images/insta_comment.png" alt="" /></button>
-                                    <button><img src="/images/insta_send_empty.png" alt="" /></button>
+                                    <button><img src={PUBLIC_URL+"/images/insta_heart_empty.png"} alt="" onClick={onClickLikeBtn} /></button>
+                                    <button><img src={PUBLIC_URL+"/images/insta_comment.png"} alt="" /></button>
+                                    <button><img src={PUBLIC_URL+"/images/insta_send_empty.png"} alt="" /></button>
                                 </div>
-                                <div className="clip-img"><button><img src="/images/profile_icon2.png" alt="" /></button></div>
+                                <div className="clip-img"><button><img src={PUBLIC_URL+"/images/profile_icon2.png"} alt="" /></button></div>
                             </div>
                             <div className="section3-like">좋아요 <span>{post.likecount}</span>개</div>
                             <div className="section3-content">

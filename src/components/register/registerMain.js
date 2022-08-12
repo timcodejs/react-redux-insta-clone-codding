@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useInput } from '../../hook/useinput';
 import { useDispatch, useSelector } from 'react-redux';
 import { REGISTER_REQUEST, REGISTER_DONE_REQUEST } from '../../reducer/user';
+import { PUBLIC_URL, FACEBOOK_IMG_WHITE_URL } from '../../modules/module';
 
 const RegisterMain = () => {
     const [email, onChangeEmail] = useInput("");
@@ -38,7 +39,7 @@ const RegisterMain = () => {
     return(
         <>
             <RegisterMainStyled>
-                <div className='logo'><button><img src="/images/logo_L.png" alt="logo" /></button></div>
+                <div className='logo'><button><img src={PUBLIC_URL+"/images/logo_L.png"} alt="logo" /></button></div>
                 <h2>친구들의 사진과 동영상을 보려면 가입하세요.</h2>
                 <div className='facebook-btn'><FacebookBtn>Facebook으로 로그인</FacebookBtn></div>
                 <div className='section-line'>
@@ -209,7 +210,11 @@ const FacebookBtn = styled.button`
     font-size: 14px;
     font-weight: 600;
     padding: 7px 9px 7px 20px;
-    background: url('/images/facebook_img_white.png') no-repeat center left 50px/16px rgba(var(--d69,0,149,246),1);
+    background-color: rgba(var(--d69,0,149,246),1);
+    background-image: url(${FACEBOOK_IMG_WHITE_URL});
+    background-repeat: no-repeat;
+    background-position: center left 50px;
+    background-size: 16px;
 `;
 
 const SpanColor = styled.span`

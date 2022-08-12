@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { LOG_OUT_REQUEST } from "../reducer/user";
 import AddPost from "../components/home/post/addPost";
+import { PUBLIC_URL } from "../modules/module";
 
 const LayoutNav = ({ children }) => {
     const navigator = useNavigate();
@@ -45,7 +46,7 @@ const LayoutNav = ({ children }) => {
             <LayoutNavStyled>
                 <div className="inner">
                     <div className="logo">
-                        <Link to="/"><img src="/images/logo_L.png" alt="logo" /></Link>
+                        <Link to="/"><img src={PUBLIC_URL+"/images/logo_L.png"} alt="logo" /></Link>
                     </div>
                     <MarginDiv className="search">
                         <div><svg aria-label="검색" className="_8-yf5 " color="#8e8e8e" fill="#8e8e8e" height="16" role="img" viewBox="0 0 24 24" width="16"><path d="M19 10.5A8.5 8.5 0 1110.5 2a8.5 8.5 0 018.5 8.5z" fill="none" stroke="currentColor"></path><line fill="none" stroke="currentColor" x1="16.511" x2="22" y1="16.511" y2="22"></line></svg></div> 
@@ -53,19 +54,19 @@ const LayoutNav = ({ children }) => {
                     </MarginDiv>
                     <ul className="menulist">
                         <li>
-                            <Link to="/"><img src="/images/insta_home.png" alt="home icon" /></Link>
+                            <Link to="/"><img src={PUBLIC_URL+"/images/insta_home.png"} alt="home icon" /></Link>
                         </li>
                         <li>
-                            <Link to="/"><img src="/images/insta_send_empty.png" alt="home icon" /></Link>
+                            <Link to="/"><img src={PUBLIC_URL+"/images/insta_send_empty.png"} alt="home icon" /></Link>
                         </li>
                         <li>
-                            <button onClick={onCLickAddPosthandler}><img src="/images/insta_plus_empty.png" alt="home icon" /></button>
+                            <button onClick={onCLickAddPosthandler}><img src={PUBLIC_URL+"/images/insta_plus_empty.png"} alt="home icon" /></button>
                         </li>
                         <li>
-                            <Link to="/"><img src="/images/insta_find_empty.png" alt="home icon" /></Link>
+                            <Link to="/"><img src={PUBLIC_URL+"/images/insta_find_empty.png"} alt="home icon" /></Link>
                         </li>
                         <li>
-                            <button><img src="/images/insta_heart_empty.png" alt="home icon" /></button>
+                            <button><img src={PUBLIC_URL+"/images/insta_heart_empty.png"} alt="home icon" /></button>
                         </li>
                         <li>
                             <button className="user-avatar" onClick={onClickPopupList}>
@@ -76,22 +77,22 @@ const LayoutNav = ({ children }) => {
                                 <ul>
                                     <li>
                                         <button>
-                                            <img src="/images/profile_icon1.png" alt="프로필 이미지" /> 프로필
+                                            <img src={PUBLIC_URL+"/images/profile_icon1.png"} alt="프로필 이미지" /> 프로필
                                         </button>
                                     </li>
                                     <li>
                                         <button>
-                                            <img src="/images/profile_icon2.png" alt="저장 이미지" /> 저장됨
+                                            <img src={PUBLIC_URL+"/images/profile_icon2.png"} alt="저장 이미지" /> 저장됨
                                         </button>
                                     </li>
                                     <li>
                                         <button>
-                                            <img src="/images/profile_icon3.png" alt="설정 이미지" /> 설정
+                                            <img src={PUBLIC_URL+"/images/profile_icon3.png"} alt="설정 이미지" /> 설정
                                         </button>
                                     </li>
                                     <li>
                                         <button>
-                                            <img src="/images/profile_icon4.png" alt="계정전환 이미지" /> 계정 전환
+                                            <img src={PUBLIC_URL+"/images/profile_icon4.png"} alt="계정전환 이미지" /> 계정 전환
                                         </button>
                                     </li>
                                     <li>

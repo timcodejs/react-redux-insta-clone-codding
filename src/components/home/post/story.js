@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { PUBLIC_URL } from "../../../modules/module";
 
 const Story = () => {
     const [leftDisplay, setLeftDisplay] = useState('none');
@@ -44,8 +45,8 @@ const Story = () => {
                 ))}
             </ul>
             <div className="scrollBtn">
-                <div onClick={onScrollLeft}><button style={{display: leftDisplay}}><img src="/images/arrow_left.png" alt="" /></button></div>
-                <div onClick={onScrollRight}><button style={{display: rightDisplay}}><img src="/images/arrow_right.png" alt="" /></button></div>
+                <div onClick={onScrollLeft}><button style={{display: leftDisplay}}><img src={PUBLIC_URL+"/images/arrow_left.png"} alt="" /></button></div>
+                <div onClick={onScrollRight}><button style={{display: rightDisplay}}><img src={PUBLIC_URL+"/images/arrow_right.png"} alt="" /></button></div>
             </div>
         </StoryStyled>
     )

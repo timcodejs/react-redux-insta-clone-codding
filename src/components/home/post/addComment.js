@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useInput } from '../../../hook/useinput';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_COMMENTS_REQUEST } from '../../../reducer/post';
+import { PUBLIC_URL } from "../../../modules/module";
 
 const AddComment = ({post}) => {
     const [comment, onChangeComment, setComment] = useInput("");
@@ -27,7 +28,7 @@ const AddComment = ({post}) => {
         <CommentInputStyled>
             <form onSubmit={onCLickCommentBtn}>
                 <div>
-                    <img src="/images/insta_smile.png" alt="smileimage" />
+                    <img src={PUBLIC_URL+"/images/insta_smile.png"} alt="smileimage" />
                     <input type="text" placeholder="댓글 달기..." value={comment} onChange={onChangeComment} autoComplete="off" required />
                 </div>
                 {comment !== "" ? (

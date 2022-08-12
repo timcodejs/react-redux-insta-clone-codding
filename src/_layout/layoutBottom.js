@@ -1,17 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { PUBLIC_URL } from "../modules/module";
 
 const LayoutBootom = ({ children }) => {
     return(
         <LayoutStyled>
             <LayoutBottomStyled>
-                <div className="login-img"><img src="/images/login_move.gif" alt="소개 이미지" /></div>
+                <div className="login-img"><img src={PUBLIC_URL+"/images/login_move.gif"} alt="소개 이미지" /></div>
                 <div>
                     <div>{children}</div>
                     <div className="apptext">앱을 다운로드하세요.</div>
                     <div className="downloadBtn">
-                        <button><img src="/images/ios_download.png" alt="ios download btn" /></button>
-                        <button><img src="/images/google_download.png" alt="google download btn" /></button>
+                        <button><img src={PUBLIC_URL+"/images/ios_download.png"} alt="ios download btn" /></button>
+                        <button><img src={PUBLIC_URL+"/images/google_download.png"} alt="google download btn" /></button>
                     </div>
                 </div>
             </LayoutBottomStyled>

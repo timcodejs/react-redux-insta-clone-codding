@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { REMOVE_COMMENTS_REQUEST, UPDATE_LIKE_COMMENT_REQUEST } from '../../../reducer/post';
+import { PUBLIC_URL } from "../../../modules/module";
 
 const CommentForm = ({post}) => {
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const CommentForm = ({post}) => {
 
     const onClickCommentLikeBtn = useCallback((v) => (e) => {
         if (e.target.src === `${window.location.href}images/insta_heart_empty.png`) {
-            e.target.src = "/images/insta_heart_red.png";
+            e.target.src = PUBLIC_URL+"/images/insta_heart_red.png";
             dispatch({
                 type: UPDATE_LIKE_COMMENT_REQUEST,
                 data: {
@@ -26,7 +27,7 @@ const CommentForm = ({post}) => {
                 }
             });
         } else if(e.target.src === `${window.location.href}images/insta_heart_red.png`) {
-            e.target.src = "/images/insta_heart_empty.png";
+            e.target.src = PUBLIC_URL+"/images/insta_heart_empty.png";
             dispatch({
                 type: UPDATE_LIKE_COMMENT_REQUEST,
                 data: {
@@ -72,7 +73,7 @@ const CommentForm = ({post}) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div><button><img src="/images/insta_heart_empty.png" alt="like" onClick={onClickCommentLikeBtn(v)} /></button></div>
+                                    <div><button><img src={PUBLIC_URL+"/images/insta_heart_empty.png"} alt="like" onClick={onClickCommentLikeBtn(v)} /></button></div>
                                 </li>
                             ))}
                         </ul>

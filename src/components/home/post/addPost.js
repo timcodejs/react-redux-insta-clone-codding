@@ -4,7 +4,7 @@ import {useDropzone} from 'react-dropzone';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_POST_REQUEST } from '../../../reducer/post';
 import { useInput } from '../../../hook/useinput';
-
+import { PUBLIC_URL } from "../../../modules/module";
 
 const AddPost = ({display, onClickAddPostExit}) => {
     const [innerWidth, setInnerWidth] = useState('604px');
@@ -91,7 +91,7 @@ const AddPost = ({display, onClickAddPostExit}) => {
                         {myFiles.length === 0 ? (
                             <div className='back-btn'></div>
                         ) : (
-                            <div className='back-btn' onClick={backPost}><img src="/images/back.png" alt="back img" /></div>
+                            <div className='back-btn' onClick={backPost}><img src={PUBLIC_URL+"/images/back.png"} alt="back img" /></div>
                         )}
                         <h3>새 게시물 만들기</h3>
                         {!next 
@@ -108,7 +108,7 @@ const AddPost = ({display, onClickAddPostExit}) => {
                                     {myFiles.length === 0 ? (
                                     <div {...getRootProps({className: 'dropzone'})}>
                                         <input {...getInputProps()} />
-                                        <div className='addpost-img'><img src="/images/addpost_img.png" alt="이미지 추가" /></div>
+                                        <div className='addpost-img'><img src={PUBLIC_URL+"/images/addpost_img.png"} alt="이미지 추가" /></div>
                                         <p>사진과 동영상을 여기에 끌어다 놓으세요</p>
                                         <div className='addpost-btn'><button>컴퓨터에서 선택</button></div>
                                     </div>
@@ -138,7 +138,7 @@ const AddPost = ({display, onClickAddPostExit}) => {
                         </div>
                     </div>
                 </div>
-                <button onClick={onClickExitBtn}><img src="/images/cencle_white.png" alt="닫기 버튼" /></button>
+                <button onClick={onClickExitBtn}><img src={PUBLIC_URL+"/images/cencle_white.png"} alt="닫기 버튼" /></button>
             </div>
         </AddPostStyled>
     )
